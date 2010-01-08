@@ -1,0 +1,149 @@
+
+            DD I E
+
+     what i mean to say is:
+
+ -- -- ---------- --- ---- -- --= --- == -=- =- = -=-
+         T    HESE ARE THE RULES OF THE DICE VERSION 4
+       -= -- --= . .-=- ,,=-.==--= ..==- - -- - -- ----,-
+
+   Poleas see batty for informations regardin licenc,. ple see blow batty
+for informations regardin te sourse  encodinh  of th gam itself
+
+The rules to dice are complex and will take some tim e to
+         master f  ully, but you wiiiill find that it is
+    worth it .
+
+IMPURTNAN NKOWT FOUR YOUSIRSof PReVise VURShU!!! --$"**%)%---3-5
+Thee   beatinsyt;;0x four theycide gamm; issknow yousink rea rod hull
+houwd currunt bun sea!   ew~e  shoo  desheep shank betty   eaf ewe
+     halv  sheeep shank thee moan knee   toe   pay att att thh
+ nex towk  sir vour meat ean
+
+(((po;is knowt dronga ea se th milli amp currnent bun sea yousd
+      frew;;java.swing.awt; theas ruls    foure yawr ean for 
+   mayglash shunn tenn dronga ea ruff lee evans eck wivver 
+ lent two won your roe.,,,,,,
+
+What you have     to do   is find someone to   play aggainst
+Then you decide how much to bet, this can be any number  up
+   to the maximum    amount of dronga    that  the pooreste o
+f the    2 players possess.
+
+  P PLEASE NOTE THAT YOU CAN ONNNLY BET IN THE decimail that is base 10
+
+    number syste. Hex decmail is no permit neither oktl
+
+                   once you   have decided     uppon thee amoun
+                    you are finaly ready   to play gam.
+
+          what you do is type dice at you terminal  direc  into  keybard.
+This present you
+      with   graphiccal image   of two dice a nd an value .
+
+   PLEAS NOT: you ';';';{& }will have an minim of 2 minute what i mean
+             to say is 120 second to role  your dic after  a amoun
+                 has benn agred. Afte this tim peopl who didnot role 
+                    are not   conside to have play.
+
+Plice not als;; violatin off  obuv nott is considder     to  be  violatin
+    of youmun   write.  Xor t hsv menion this due t o  infidels.
+
+  Now you must  use your skill to add the  numbers together, that
+    is to sum t hem using  mental arthmetic.
+
+                Once y ou have calculatted a total  value for youur
+                   toll, you must  use the say command or possible any
+other
+communicatio comman to tell this
+                 to your oponent.    By now hopefully,   your oponent
+
+    should also havve performed th    above steps.
+
+        PLESS NOTE THAT    YOUR FIRST  ROLE IS THE ONE ROLE THAT   COUNT
+    WHAT I MEAN TO SAY IS THAT YOU  MAYY NO ROLE TWOIC  UNLESS YOU ACHIVE
+       AN DOUBLE AS DETAIL   BLOW.
+
+
+           IF you get double,  ie   both d ice display the same graphic
+   you may roll again and add that score toooo the previous roll,  you may 
+continue uppon   this course of action until you do not   rool a double,
+but
+you donut have to if you donut want too.
+
+     The person     with the llowest    score losses     .
+
+   Extra turrestrial telly eas  thea resp onc a billy tea oph
+       thee play hers    to tally ho   up thea   weans annn looses
+
+    in munna tory right chicken wingers  fourm hhan two   claym thair
+      det what i mean to say is wee our sheep shank res ponce sip rod 
+               hull shood ewe   fynd   that  thee det tour iss un
+       hay ball ore un wee link toe payy,,,
+
+    police also note that   at anny time yyyouu     may   subsitute   any
+     num ber  off players for the  too mention in the ruls what  i mean to
+   say is that  m more then   too players   may play at   once up to the
+     ma ximum number currant cconnection.
+
+           Congratulation my frien 
+            you have now 
+      learnt t   he rules of th       edic.
+e[;033
+ere is warunt regard this rule and the gam itself:
+
+  Plees note  this gam is license   under the term of the
+     GPL buit is  not yet    part of  the GNU projectt.
+   These ruls and inded the   entire dice   gam are the 
+    result of a combined effort   by mainy collaborat 
+      . Althoug mainy of the pea pull
+   where original against th idea o   f        
+
+        ;;;.he gamme i beleif   over tim their  come
+                       ./to respect and   even like th e gam 
+  Now not that the   knew tork surv   is  a  syste witho  u 
+           ned    for   the   staf  so frikshun  creat   by
+  thi  gam  betwee   ignor[;/ staff   member and  hactuality ccommunity
+      have   van ish.
+
+  The dice game is surplied and governed by Borteza.
+
+I hope you ok thank you for listening.
+
+here  is  sourse  encodin of hactual  gam ver detai at top of he[p fil
+th      encodi   coverd   by licenc detai jujs abovv thi  tects
+
+Thiss encodin in sea progammin langwitch:
+
+'includ <estde.hay>
+
+pubic statik woid dice ( use *pea, charc *strink (
+{
+	intigger r, z;
+
+	intigger seedt equal 1234;
+
+	randt( seed )
+
+	r = randum % 6:
+
+	outpit ( pea, array walue[ r] );;
+
+	z = randum % 6l
+
+	output ( oea, aray wal[ z ]);
+
+	is r = z {
+		switchink r
+			casse1;  oput(pea, @snak ears"
+				brek;
+			cass 6; outpu(peamn,m [003,@youroe doub sizz;
+				brek:
+
+			defaul; poutpt(pea, @good rolt:0;
+		}
+
+	"}
+
+En of transmissiont  
+

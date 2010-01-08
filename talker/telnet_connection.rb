@@ -1,0 +1,64 @@
+module TelnetConnection
+  def post_init
+    puts "[Established connection with communication server]"
+    @talker  = Talker.instance
+    
+    # data is sent from the talker to the output channel, 
+    # this is forwarded to the telnet server
+    @talker.output.subscribe do |data| 
+      send_data data + "\n"
+    end
+  end
+
+  def parse_telnet(signature, data) # minimal Telnet
+    data.gsub!(/([^\015])\012/, "\\1") # ignore bare LFs
+    data.gsub!(/\015\0/, "") # ignore bare CRs
+    data.gsub!(/\0/, "") # ignore bare NULs
+
+    while data.index("\377") # parse Telnet codes
+      puts "IAC FROM #{signature} #{data.dump}"
+      if data.sub!(/(^|[^\377])\377[\375\376](.)/, "\\1")
+      # answer DOs and DON'Ts with WON'Ts
+      send_data("#{signature} send \377\374#{$2}") unless $2 == "\001" # unless TELOPT_ECHO
+      elsif data.sub!(/(^|[^\377])\377[\373\374](.)/, "\\1")
+      # answer WILLs and WON'Ts with DON'Ts
+      send_data("#{signature} send \377\376#{$2}")
+      elsif data.sub!(/(^|[^\377])\377\366/, "\\1")
+      # answer "Are You There" codes
+      send_data("#{signature} send Still here, yes.")
+      elsif data.sub!(/(^|[^\377])\377\364/, "\\1")
+      # do nothing - ignore IP Telnet codes
+      elsif data.sub!(/(^|[^\377])\377[^\377]/, "\\1")
+      # do nothing - ignore other Telnet codes
+      elsif data.sub!(/\377\377/, "\377")
+      # do nothing - handle escapes
+      end
+    end
+  end
+
+  def receive_data(data)
+    data.split("\n").each do |line|
+      (signature, command, message) = line.strip.split(' ', 3)
+
+      case command
+      when "reset"
+        puts "RESET"
+        @talker.disconnect_all
+      when "connection"
+        puts "CONNECTION #{message}"
+        @talker.connection(signature, message)
+      when "disconnection"
+        puts "DISCONNECTION #{message}"
+        @talker.disconnection(signature)
+      when "input"
+        original_length = message.length
+        parse_telnet(signature, message)
+        @talker.input(signature, message) unless original_length > 0 && message.length == 0
+      end
+    end
+  end
+
+  def unbind
+    puts "[Lost connection]"
+  end
+end

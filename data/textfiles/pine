@@ -1,0 +1,23 @@
+^h  PINE 4.62   MAIN MENU                             Folder: INBOX  No Messages  ^n
+
+
+       ?     HELP               -  Get help using Pine
+
+       C     COMPOSE MESSAGE    -  Compose and send/post a message
+
+      ^h I     MESSAGE INDEX      -  View messages in current folder ^n
+
+       L     FOLDER LIST        -  Select a folder OR news group to view
+
+       A     ADDRESS BOOK       -  Update address book
+
+       S     SETUP              -  Configure Pine Options
+
+       Q     QUIT               -  Leave the Pine program
+
+
+
+   Copyright 1989-2005.  PINE is a trademark of the University of Washington.
+                    ^h[Folder "INBOX" opened with 0 messages]^n
+^h?^n Help                     ^hP^n PrevCmd                 ^hR^n RelNotes
+^hO^n OTHER CMDS ^h>^n [ListFldrs] ^hN^n NextCmd                 ^hK^n KBLock

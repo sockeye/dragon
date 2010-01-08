@@ -1,0 +1,20 @@
+=====================================
+This is the rules of the game hangman
+=====================================
+The rules of this game are simple.
+Type hmchal [user] [word] to start the
+game. 
+
+RULES:
+1) You are only allowed real words
+2) You are not allowed capital letters in your words
+3) You are not allowed to use punctuation in words
+
+The rest is obvious.
+
+ByE bYe
+
+from Horace
+
+
+

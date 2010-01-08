@@ -1,0 +1,35 @@
+
+                                 ^W[ ^YQ U I Z ^W]^n
+
+   ^YQUIZ^y lets you run quizzes for the other users to play, and lets you
+   take part in other people's quizzes.
+
+^W * Playing in quizzes^n
+
+ Playing a Quiz is much easier than running one: the only subcommands you will
+ need to use are ^Wjoin^n, ^Wanswer^n and ^Wleave^n. All subcommands are prefixed by the
+ command name, ^Wquiz^n (so ^Wquiz join^n issues the join subcommand of the Quiz.)
+
+   ^Yjoin^y                - lets you join in the current game.
+   ^Yleave^y               - lets you leave the current game.
+   ^Yanswer <answer>^y     - will submit ^W<answer>^n.
+
+   ^C * ^Wanswer^c can be abbreviated to ^Wans^c.^n
+
+^W * Running your own quiz^n
+
+ As a Quizmaster, your task is slightly more difficult. You may ask questions
+ using the ^Wquestion^n subcommand, or its abbreviation ^Wask^n. It is up to you to
+ mark answers as correct using the ^Wtick^n subcommand. If you do not ^Wtick^n an
+ answer, it will be treated as incorrect (although you can do this explicitly
+ using ^Wcross^n, which can also be used to put right an incorrect marking.)
+
+   ^Ystart^y               - lets you start a new quiz, as the Quizmaster.
+   ^Yend^y                 - lets you finish a quiz.
+   ^Yquestion <question>^y - begins a new round with the question stated.
+   ^Ytick <player>^y       - marks the stated player's answer as correct.
+   ^Ycross <player>^y      - marks the stated player's answer as incorrect.
+
+   ^C * ^Wquestion^c can be abbreviated to ^Wask^c.^n
+   ^C * ^Wtick^c can be abbreviated to simply ^Wy^c, for 'yes'.^n
+   ^C * ^Wcross^c can be abbreviated to simply ^Wn^c, for 'no'.^n

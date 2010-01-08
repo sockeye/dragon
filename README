@@ -1,0 +1,15 @@
+Dragon Talk Server
+
+This code is copyright (c) 2010 Dockyard Enterprises. All rights reserved.
+You may not read, copy, modify or run the code without a license. Offenders 
+may be subject to punitive action. You may not continue reading beyond this
+point without a license.
+
+Requirements
+ruby 1.9.1
+eventmachine gem
+
+Booting
+ruby connection_server.rb
+
+The connection server will automatically start the talk server process.

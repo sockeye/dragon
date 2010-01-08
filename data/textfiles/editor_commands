@@ -1,0 +1,10 @@
+   ^r[ ^L.end      ^nEnd the edit session keeping changes.           ^r]
+   ^r[ ^L.cancel   ^nEnd the edit session disgarding changes.        ^r]
+   ^r[ ^L.view     ^nView the contents of the edit buffer.           ^r]
+   ^r[ ^L.up       ^nMove up one line.                               ^r]
+   ^r[ ^L.down     ^nMove down one line.                             ^r]
+   ^r[ ^L.goto <n> ^nMove to line n.                                 ^r]
+   ^r[ ^L.top      ^nMove to line 1.                                 ^r]
+   ^r[ ^L.bottom   ^nMove to the last line in the edit buffer.       ^r]
+   ^r[ ^L.insert   ^nInsert a blank line at the current position.    ^r]
+   ^r[ ^L.delete   ^nDelete the current line.                        ^r]^z
