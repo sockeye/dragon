@@ -1,0 +1,7 @@
+data/socials/
+data/users/
+logs/
+import/
+
+data/connections.yml
+socket
