@@ -89,7 +89,7 @@ module Commands
       output buffer
     end
   end
-  define_alias 'examine', 'finger', 'profile', 'x'
+  define_alias 'examine', 'finger', 'profile', 'x', 'f'
 
   define_command 'settings' do |target_name|
     target = target_name.blank? ? self : find_entity(target_name)
