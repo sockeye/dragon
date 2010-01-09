@@ -1,3 +1,5 @@
+require 'time'
+
 module TelnetConnection
   def post_init
     puts "[Established connection with communication server]"
@@ -44,6 +46,9 @@ module TelnetConnection
       when "reset"
         puts "RESET"
         @talker.disconnect_all
+      when "uptime"
+        puts "UPTIME"
+        Talker.instance.connection_server_uptime = Time.parse(message)
       when "connection"
         puts "CONNECTION #{message}"
         @talker.connection(signature, message)
@@ -51,6 +56,7 @@ module TelnetConnection
         puts "DISCONNECTION #{message}"
         @talker.disconnection(signature)
       when "input"
+        message ||= ""
         original_length = message.length
         parse_telnet(signature, message)
         @talker.input(signature, message) unless original_length > 0 && message.length == 0

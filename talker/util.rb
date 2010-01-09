@@ -106,6 +106,10 @@ module TalkerUtilities
     "#{word}#{amount != 1 ? 's' : ''}"
   end
   
+  def is_are(amount)
+    amount == 1 ? 'is' : 'are'
+  end
+  
   def time_in_words(secs)
     secs = secs.to_i
     if secs == 0
@@ -153,5 +157,10 @@ module TalkerUtilities
     end
     result.map {|s|s.strip!}
     result
+  end
+  
+  def gender_string(type)
+    g = self.gender || :female
+    Social::GENDER_WORDS.has_key?(type) ? Social::GENDER_WORDS[type][g] : ""
   end
 end

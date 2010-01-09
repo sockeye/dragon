@@ -23,7 +23,7 @@ class User
 
   attr_accessor :id, :handler, :ip_address
 
-  attr_accessor :idle_message
+  attr_accessor :idle_message, :muffled
 
   def initialize(name)
     @name = name
@@ -33,6 +33,7 @@ class User
     @money = 0
     @rank = 0
     @colour = :ansi
+    @muffled = false
   end
 
   def lower_name
@@ -77,6 +78,7 @@ class User
     @total_connections = @total_connections + 1
     @last_activity = @last_login = Time.now
     @ip_address = connection.ip_address
+    @muffled = false
     
     if resident?
       output get_text("changes")      
@@ -87,23 +89,23 @@ class User
     old_connection = connections[old_id]
 
     if old_connection.nil?
-      output_to_all "^g>^G> ^n#{name} #{connect_message || "connects"} ^G<^g<^n"
+      output_to_all "^g>^G> ^n#{name} #{get_connect_message} ^G<^g<^n"
       connected_users[lower_name] = self
       output "\n^g>^G> ^nWelcome to Dragon World ^G<^g<^n\n"
     else
       old_connection.output "[Reconnection from #{connection.ip_address}]"
       old_connection.disconnect
-      output_to_all "^Y>^y< ^n#{name} #{connect_message || "reconnects"} ^y>^Y<^n"
+      output_to_all "^Y>^y< ^n#{name} #{get_reconnect_message} ^y>^Y<^n"
     end
     
-    # output who
+    look
     user_prompt
   end
 
   def logout
     connected_users.delete(lower_name)
     @id = nil
-    output_to_all "^R<^r< ^n#{name} #{disconnect_message || "leaves"} ^r>^R>^n"
+    output_to_all "^R<^r< ^n#{name} #{get_disconnect_message} ^r>^R>^n"
     
     if !resident?
       delete
@@ -125,7 +127,19 @@ class User
   end
 
   def get_prompt
-    prompt || "(dragon) "
+    @prompt || "(dragon) "
+  end
+
+  def get_connect_message
+    @connect_message || "connects"
+  end
+
+  def get_disconnect_message
+    @disconnect_message || "leaves"
+  end
+
+  def get_reconnect_message
+    @reconnect_message || "reconnects"
   end
 
   def user_prompt

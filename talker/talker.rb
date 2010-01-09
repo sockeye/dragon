@@ -21,7 +21,8 @@ class Talker
   
   include Singleton
   
-  attr_accessor :connected_users, :all_users, :output, :connections
+  attr_accessor :connected_users, :all_users, :output, :connections,
+                :talk_server_uptime, :connection_server_uptime
   attr_reader :current_id
   
   def initialize
@@ -29,6 +30,8 @@ class Talker
     @all_users = {}
     @connected_users = {}
     @commands = {}
+    @connection_server_uptime = nil
+    @talk_server_uptime = Time.now
   end
   
   def run

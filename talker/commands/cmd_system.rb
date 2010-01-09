@@ -89,7 +89,21 @@ module Commands
       output buffer
     end
   end
-  define_alias 'examine', 'finger', 'profile'
+  define_alias 'examine', 'finger', 'profile', 'x'
+
+  define_command 'settings' do |target_name|
+    target = target_name.blank? ? self : find_entity(target_name)
+    if target
+      buffer = title_line("Settings for #{target.name}") + "\n"
+      buffer += "      Title : #{target.name} #{target.title}^n\n"
+      buffer += "      Login : ^g>^G> ^n#{target.name} #{target.get_connect_message} ^G<^g<^n\n"
+      buffer += " Disconnect : ^R<^r< ^n#{target.name} #{target.get_disconnect_message} ^r>^R>^n\n"
+      buffer += "  Reconnect : ^Y>^y< ^n#{target.name} #{target.get_reconnect_message} ^y>^Y<^n\n"
+      buffer += "     Prompt : #{target.get_prompt}^n\n"
+      buffer += blank_line
+      output buffer
+    end
+  end
 
   define_command 'who' do
     output title_line("Who") + "\n" +
@@ -129,5 +143,42 @@ module Commands
     end
   end
   define_alias 'idle', 'active'
+
+  define_command 'help' do
+    buffer = title_line("Help")
+    buffer += "
+^cBasic talker commands:^n
+^Lsay^n      Speak to everyone
+^Lemote^n    Perform an action to everyone
+^Lwho^n      Get a list of people who are connected
+^Ltell^n     Speak to someone privately
+^Lcommands^n List all the available commands
+^Lsocials^n  List all the available socials (user defined actions)
+^Lexamine^n  Get details about a user or social
+^Lidle^n     Show when users were last active
+^Lpassword^n Set and password and reserve your user name for future visits
+"
+    buffer += blank_line
+    output buffer
+  end
+  define_alias 'help', '?'
+  
+  define_command 'uptime' do
+    buffer = "Connection server uptime: #{time_in_words(Time.now - Talker.instance.connection_server_uptime)}\n"
+    buffer += "Talk server uptime: #{time_in_words(Time.now - Talker.instance.talk_server_uptime)}"
+    output buffer
+  end 
+
+  define_command 'muffle' do
+    self.muffled = !muffled
+    
+    if muffled
+      buffer = "^Y<-^n #{name} wear ear muff ^Y->^n"
+      output_to_all buffer
+      output buffer
+    else
+      output_to_all"^Y->^n #{name} remove ear muff ^Y<-^n"
+    end
+  end
 
 end
