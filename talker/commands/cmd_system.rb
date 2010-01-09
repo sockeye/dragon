@@ -103,7 +103,12 @@ module Commands
       active_users.map { |u| sprintf("%-15.15s #{u.ip_address}", u.name) }.join("\n") + "\n" + 
       blank_line
   end
-  define_alias 'connected', 'lsi'
+  define_alias 'connections', 'connected', 'lsi'
+
+  define_command 'look' do
+    look
+  end
+  define_alias 'look', 'l'
 
   define_command 'idle' do |user_name|
     if !user_name.blank?

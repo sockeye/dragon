@@ -108,6 +108,11 @@ module Helpers
     end
   end
   
+  def look
+    num = connected_users.keys.length
+    output "There #{is_are(num)} #{num} #{pluralise('user', num)} online: #{commas_and(connected_users.values.map{|u|u.name})}"
+  end
+  
   # send fully formatted message to a connection
   # use 'output' instead of this
   def raw_send(message)

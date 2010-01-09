@@ -22,9 +22,9 @@ class Connection
     when "quit"
       disconnect
     when "who", "look"
-      output "Sorry, not yet implemented"
+      look
     when "version"
-      output "Sorry, not yet implemented"
+      output "#{Talker::NAME} - Version #{Talker::VERSION}"
     else
       if valid_name?(string)
         u = lookup_user string
@@ -40,8 +40,6 @@ class Connection
           # handle new user
           @login_stage = :completed
         end
-      else
-        # handle invalid name
       end
     end
     send_prompt "Please enter your nickname: " if @login_stage == :handle_name
