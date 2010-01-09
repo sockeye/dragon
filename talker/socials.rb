@@ -96,7 +96,7 @@ class Social
   
   GENDER_WORDS = {
     "heshe" => {:male => "he", :female => "she"},
-    "hisher" => {:male => "he", :female => "she"},
+    "hisher" => {:male => "his", :female => "her"},
     "himher" => {:male => "him", :female => "her"},
     "hishers" => {:male => "his", :female => "hers"},
     "malefemale" => {:male => "male", :female => "female"},
