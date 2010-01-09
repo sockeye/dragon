@@ -8,6 +8,11 @@ EM.run {
   class TelnetServer < EM::Connection
     def self.start(location, port)
       EM.start_server location, port, self
+      @boot_time = Time.now
+    end
+
+    def self.boot_time
+      @boot_time
     end
 
     def post_init
@@ -50,6 +55,8 @@ EM.run {
   TelnetServer.start("0.0.0.0", 4000)
 
   class TalkerConnection < EM::Connection
+    @@boot_count = 0
+    
     def self.start
       finished = false
       until finished
@@ -57,19 +64,22 @@ EM.run {
           EM.connect_unix_domain "socket", TalkerConnection
           finished = true
          rescue
-           puts "[The talker is down, attempting to boot]"
+           puts "[Booting talker]"
            @pid = fork do
              exec("ruby talk_server.rb")
            end
            Process.detach(@pid)
-           sleep 4
+           sleep 5
          end
        end
     end
     
     def post_init
      puts "[Established connection with talker]"
+     @@boot_count += 1
      @channel = SendToTalker.subscribe { |m| send_data m }
+     send_data "0 reset\n" if @@boot_count == 1
+     send_data "0 uptime #{TelnetServer.boot_time}\n"
     end
 
     def receive_data data
@@ -81,7 +91,8 @@ EM.run {
      TalkerConnection.start
     end
   end
-  TalkerConnection.start
-
-  SendToTalker << "0 reset"
+  p = proc {
+    TalkerConnection.start
+  }
+  EM.defer(p)
 }
