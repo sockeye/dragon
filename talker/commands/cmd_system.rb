@@ -41,7 +41,11 @@ module Commands
       output "Format: idea <message>"
     else
       log 'idea', "#{self.name} #{string}"
-      output "That's an excellent idea, thanks a lot."
+      if string.downcase =~ /sword/
+        output "Sorry, that idea is shit"
+      else
+        output "That's an excellent idea, thanks a lot."
+      end
     end
   end
 
