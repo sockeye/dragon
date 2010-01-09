@@ -27,8 +27,8 @@ module Commands
   define_alias 'echo', '+'
   
   define_command 'tell' do |message|
-    (target_name, message) = message.split(' ', 2)
-    message.strip!
+    (target_name, message) = get_arguments(message, 2)
+    
     if message.blank?
       output "Format: tell <user(s)> <message>"
     else
@@ -50,8 +50,8 @@ module Commands
   define_alias 'tell', '.', 'rsay'
   
   define_command 'pemote' do |message|
-    (target_name, message) = message.split(' ', 2)
-    message.strip!
+    (target_name, message) = get_arguments(message, 2)
+    
     if message.blank?
       output "Format: pemote <user(s)> <message>"
     else

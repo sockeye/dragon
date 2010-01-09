@@ -143,7 +143,15 @@ module TalkerUtilities
   end
   
   def blank_line
-    "^B" + '_' * 79 + "^n"
+    "^B" + '_' * 79 + "^n\n"
   end
   
+  def get_arguments(string, num)
+    result = string.blank? ? [] : string.split(/ /, num)
+    while result.length < num
+      result << ""
+    end
+    result.map {|s|s.strip!}
+    result
+  end
 end
