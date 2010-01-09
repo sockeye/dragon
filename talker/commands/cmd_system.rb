@@ -114,7 +114,9 @@ module Commands
 
   define_command 'connections' do
     output title_line("Connections") + "\n" +
-      active_users.map { |u| sprintf("%-15.15s #{u.ip_address}", u.name) }.join("\n") + "\n" + 
+      active_users.map { |u| 
+        c = u.active? ? "^G+" : "^W@"
+        sprintf(" #{c}^n %-15.15s #{short_time(u.idle_time)} #{u.ip_address}", u.name) }.join("\n") + "\n" + 
       blank_line
   end
   define_alias 'connections', 'connected', 'lsi'
