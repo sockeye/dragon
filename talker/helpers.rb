@@ -68,13 +68,13 @@ module Helpers
   
   def output(message)
     buffer = "\r\0" + colourise(message, self.colour).gsub("\n", "\\n") + "\033[0K\\n"
-    buffer += get_prompt if Talker.instance.current_id != id
+    buffer += colourise(get_prompt, self.colour) if Talker.instance.current_id != id
 
     raw_send buffer
   end
   
   def send_prompt(message)
-    raw_send "\r\0#{message}\377\371"
+    raw_send "\r\0#{colourise(message, self.colour)}\377\371"
   end
 
   def password_mode(state)  # IAC WILL ECHO  # IAC WONT ECHO
