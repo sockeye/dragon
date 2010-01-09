@@ -34,9 +34,9 @@ module Commands
       @command_list[alias_name] = Alias.new(alias_name, @command_list[command_name])
     end
   end
-  
-  def self.find(name)
-    @command_list[name]
+    
+  def self.command_list
+    @command_list
   end
   
   def self.names

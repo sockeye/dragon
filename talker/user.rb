@@ -138,12 +138,9 @@ class User
 
       (command_name, body) = split_input(input_string)
     
-      command = Commands.find(command_name.downcase)
+      command = find_command(command_name.downcase)
       if command
         command.execute(self, body)
-      else
-        output "'#{command_name}' was not recognised as a valid command."
-        log 'unknown', "#{self.name} #{command_name}"
       end
       
       @last_activity = Time.now

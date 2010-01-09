@@ -2,14 +2,14 @@ module Helpers
   include TalkerUtilities
     
   def output_to_all(message)
-    connected_users.values.each { |u| u.output message }
+    connected_users.values.each { |u| u.output message unless u.muffled }
   end
   
   def all_users
     Talker.instance.all_users
   end
   
-  def find_user_from_hash(hash, name, options={})
+  def find_with_partial_matching(hash, name, options={})
     return nil if name.blank?
     lower_name = name.downcase
     u = hash[lower_name]
@@ -27,16 +27,16 @@ module Helpers
   end
   
   def find_user(name, options={})
-    find_user_from_hash(Talker.instance.all_users, name, options)
+    find_with_partial_matching(Talker.instance.all_users, name, options)
   end
     
   def find_connected_user(name, options={})
-    find_user_from_hash(connected_users, name, options)
+    find_with_partial_matching(connected_users, name, options)
   end
 
   def find_social(name, options={})
     socials = Social.socials
-    find_user_from_hash(socials, name, :silent => true)
+    find_with_partial_matching(socials, name, :silent => true)
   end
 
   def find_entity(name)
@@ -52,7 +52,15 @@ module Helpers
       output "A match for \'#{name}\' could not be found." if e.nil?
       e
     end
-  end  
+  end
+  
+  def find_command(command_name)
+    command = find_with_partial_matching(Commands.command_list, command_name)
+    if command.nil?
+      log 'unknown', "#{self.name} #{command_name}"
+    end
+    command
+  end
 
   def lookup_user(name)
     Talker.instance.all_users[name.downcase]
