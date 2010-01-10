@@ -12,6 +12,7 @@ require 'talker/commands/cmd_system'
 require 'talker/commands/cmd_user'
 require 'talker/commands/cmd_comms'
 require 'talker/commands/cmd_dev'
+require 'talker/commands/cmd_games'
 
 require 'talker/socials'
 

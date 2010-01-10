@@ -25,6 +25,9 @@ class User
 
   attr_accessor :idle_message, :muffled
 
+  RANK = ['Peasant', 'Farmer', 'Knight', 'Baron', 'Earl', 'Princess', 'King']
+  RANK_COLOUR = ['', '^y', '^Y', '^G', '^C', '^P', '^R']
+
   def initialize(name)
     @name = name
     @first_seen = @last_activity = Time.now
@@ -170,6 +173,33 @@ class User
     Time.now - self.last_login
   end
 
+  def promote!
+    if can_afford_promotion? && rank < 6
+      self.money -= next_rank_cost
+      @rank += 1
+    end
+  end
+  
+  def next_rank_cost
+    1000 * (2 ** rank)
+  end
+  
+  def can_afford_promotion?
+    money >= next_rank_cost
+  end
+
+  def rank_name
+    RANK[rank]
+  end
+  
+  def rank_name_with_colour
+    "#{RANK_COLOUR[rank]}#{RANK[rank]}^n"
+  end
+
+  def cname
+    "#{RANK_COLOUR[rank]}#{name}^n"
+  end
+  
   def self.load(name)
     lower_name = name.downcase
     if FileTest.exist?("data/users/#{lower_name}.yml") 
@@ -187,10 +217,6 @@ class User
     u.save
     @users[name.downcase] = u
   end
-
-#  def self.find(name)
-#    Talker.instance.all_users[name.downcase]
-#  end
 
   def self.load_all
     users = {}
