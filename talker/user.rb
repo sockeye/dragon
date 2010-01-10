@@ -281,6 +281,7 @@ class User
           when "title" then u.title = value
           when "gronda" then u.money = value.to_i
           when "gender" then u.gender = value == "2" ? :male : (value == "1" ? :female : nil)
+          when "debug" then u.debug = (value.to_i > 0)
           end
         end
         u.save

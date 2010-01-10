@@ -10,6 +10,7 @@ module TelnetConnection
     @talker.output.subscribe do |data| 
       send_data data + "\n"
     end
+    @talker.debug_message "Talk server loaded"
   end
 
   def parse_telnet(signature, data) # minimal Telnet

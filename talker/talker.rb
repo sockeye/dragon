@@ -23,7 +23,7 @@ class Talker
   include Singleton
   
   attr_accessor :connected_users, :all_users, :output, :connections,
-                :talk_server_uptime, :connection_server_uptime
+                :talk_server_uptime, :connection_server_uptime, :shutdown
   attr_reader :current_id
   
   def initialize
@@ -33,6 +33,7 @@ class Talker
     @commands = {}
     @connection_server_uptime = nil
     @talk_server_uptime = Time.now
+    @shutdown = false
   end
   
   def run
@@ -101,6 +102,9 @@ class Talker
       end
     end
     @current_id = nil
+    if @shutdown
+      EM.stop_event_loop 
+    end
   end
   
   def find_or_add_user(name)
@@ -141,4 +145,9 @@ class Talker
     end
     puts "[loaded #{@connections.keys.length} connections]"
   end
+
+  def debug_message(message)
+    @connected_users.values.select {|u|u.debug}.each { |u| u.output "^g[debug] #{message}^n" }
+  end  
+  
 end

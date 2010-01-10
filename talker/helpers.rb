@@ -105,6 +105,10 @@ module Helpers
     Textfile.get_text(name)
   end
   
+  def debug_message(message)
+    Talker.instance.debug_message(message)
+  end
+  
   def log(log_file, text)
     File.open("logs/#{log_file}", "a") {|f| f.puts "#{Time.now.strftime("%Y-%m-%d %H:%M")} #{text}"}
   end
@@ -112,7 +116,7 @@ module Helpers
   def reboot
     if developer?
       Talker.instance.save
-      exit
+      Talker.instance.shutdown = true
     end
   end
   

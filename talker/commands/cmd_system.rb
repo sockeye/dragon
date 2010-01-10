@@ -116,6 +116,13 @@ module Commands
   end
   define_alias 'who', 'w'
 
+  define_command 'whod' do
+    output title_line("Who Debug") + "\n" +
+      active_users.map { |u| sprintf("%15.15s #{u.debug ? 'Yes' : 'No'}^n", u.name) }.join("\n") + "\n" + 
+      blank_line
+  end
+  define_alias 'who', 'w'
+
   define_command 'connections' do
     output title_line("Connections") + "\n" +
       connected_users.values.map { |u| 
