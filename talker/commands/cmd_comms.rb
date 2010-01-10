@@ -3,7 +3,7 @@ module Commands
     if message.blank?
       output "Format: say <message>"
     else
-      output_to_all "#{name} says '#{message}^n'"
+      output_to_all "#{cname} says '#{message}^n'"
     end
   end
   define_alias 'say', '`', '\'', '\"'
@@ -12,7 +12,7 @@ module Commands
     if message.blank?
       output "Format: emote <message>"
     else
-      output_to_all "#{name} #{message}^n"
+      output_to_all "#{cname} #{message}^n"
     end
   end
   define_alias 'emote', ';', ':', 'emtoe', 'emoet', 'emotes', 'me'
@@ -21,7 +21,7 @@ module Commands
     if message.blank?
       output "Format: echo <message>"
     else
-      output_to_all "[#{name}] #{message}"
+      output_to_all "[#{cname}] #{message}"
     end
   end
   define_alias 'echo', '+'
@@ -41,8 +41,8 @@ module Commands
         else
           ['tell', '']
         end
-        target.output "^L> #{name} #{format[0]}s #{format[1]}you \'#{message}\'^n"
-        output "^L> You #{format[0]} #{format[1]}#{target.name} \'#{message}\'^n"
+        target.output "^L> #{cname}^L #{format[0]}s #{format[1]}you \'#{message}\'^n"
+        output "^L> You #{format[0]} #{format[1]}#{target.cname}^L \'#{message}\'^n"
         output_inactive_message(target)
       end
     end
@@ -58,8 +58,8 @@ module Commands
       target = find_connected_user(target_name)
       if target
         space = message =~ /^[,']/ ? '' : ' '
-        target.output "^L> #{name}#{space}#{message}"
-        output "^L> #{name}#{space}#{message}"
+        target.output "^L> #{cname}^L#{space}#{message} (to you)"
+        output "^L> #{cname}^L#{space}#{message} (to #{target.cname}^L)"
         output_inactive_message(target)
       end
     end

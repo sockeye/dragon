@@ -81,7 +81,7 @@ module Commands
           buffer += "Total login time : #{time_in_words(target.total_time)}\n"
         end
         buffer += "     Connections : #{target.total_connections}\n"
-        buffer += "            Rank : Dock Worker\n"
+        buffer += "            Rank : #{target.rank_name_with_colour}\n"
         buffer += "          Drogna : #{target.money}\n"
         buffer += blank_line
       else
