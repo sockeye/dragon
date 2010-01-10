@@ -118,7 +118,7 @@ module Commands
 
   define_command 'connections' do
     output title_line("Connections") + "\n" +
-      active_users.map { |u| 
+      connected_users.values.map { |u| 
         c = u.active? ? "^G+" : "^W@"
         sprintf(" #{c}^n %-15.15s #{short_time(u.idle_time)} #{u.ip_address}", u.name) }.join("\n") + "\n" + 
       blank_line
