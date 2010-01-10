@@ -18,6 +18,36 @@ module Commands
     end
     save
   end
+
+  define_command 'connectmsg' do |message|
+    if message.blank?
+      self.connect_message = nil
+    else
+      self.connect_message = message.slice(0, 60)
+    end
+    output "Your connect message is now ^g>^G> ^n#{name} #{get_connect_message} ^G<^g<^n"
+    save
+  end
+
+  define_command 'disconnectmsg' do |message|
+    if message.blank?
+      self.disconnect_message = nil
+    else
+      self.disconnect_message = message.slice(0, 60)
+    end
+    output "Your disconnect message is now ^R<^r< ^n#{name} #{get_disconnect_message} ^r>^R>^n"
+    save
+  end
+
+  define_command 'reconnectmsg' do |message|
+    if message.blank?
+      self.reconnect_message = nil
+    else
+      self.reconnect_message = message.slice(0, 60)
+    end
+    output "Your reconnect message is now ^Y>^y< ^n#{name} #{get_reconnect_message} ^y>^Y<^n"
+    save
+  end
   
   define_command 'gender' do |message|
     changed = true
@@ -78,4 +108,16 @@ module Commands
       save
     end
   end
+  
+  define_command 'debug' do
+    self.debug = !debug
+    
+    if debug
+      output "You are viewing the debug channel."
+    else
+      output "You are no longer viewing the debug channel."
+    end
+    save
+  end
+  
 end
