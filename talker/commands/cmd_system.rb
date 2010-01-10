@@ -111,7 +111,7 @@ module Commands
 
   define_command 'who' do
     output title_line("Who") + "\n" +
-      active_users.map { |u| sprintf("%15.15s #{u.title}", u.name) }.join("\n") + "\n" + 
+      active_users.map { |u| sprintf("%15.15s #{u.title}^n", u.name) }.join("\n") + "\n" + 
       blank_line
   end
   define_alias 'who', 'w'
