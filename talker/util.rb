@@ -73,23 +73,27 @@ module TalkerUtilities
   }
   
   def colourise(string, colour_mode)
-    case colour_mode
-    when :ansi
-      colours     = ANSI_COLOURS
+    if colour_mode == :wands
+      string
     else
-      colours     = {}
+      case colour_mode
+      when :ansi
+        colours     = ANSI_COLOURS
+      else
+        colours     = {}
+      end
+  
+      stored_string  = ""
+      scanner = StringScanner.new(string)
+      while match = scanner.scan_until(/\^(\S?)/)
+        stored_string << match.slice(0, match.length - scanner.matched_size)
+        l = scanner[1]
+        l = RANDOM_COLOUR[l][rand(RANDOM_COLOUR[l].length)] if RANDOM_COLOUR.keys.include?(l)
+        stored_string << colours[l] if !l.blank? && colours.keys.include?(l)
+      end
+      stored_string << scanner.rest if scanner.rest?
+      stored_string
     end
-    
-    stored_string  = ""
-    scanner = StringScanner.new(string)
-    while match = scanner.scan_until(/\^(\S?)/)
-      stored_string << match.slice(0, match.length - scanner.matched_size)
-      l = scanner[1]
-      l = RANDOM_COLOUR[l][rand(RANDOM_COLOUR[l].length)] if RANDOM_COLOUR.keys.include?(l)
-      stored_string << colours[l] if !l.blank? && colours.keys.include?(l)
-    end
-    stored_string << scanner.rest if scanner.rest?
-    stored_string
   end
 
   def commas_and(list)
