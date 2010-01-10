@@ -14,7 +14,7 @@ module Helpers
     lower_name = name.downcase
     u = hash[lower_name]
     if u.nil? && !options[:exact_match] # try partial match
-      matches = hash.keys.select {|n| n =~ /^#{lower_name}/}
+      matches = hash.keys.select {|n| n =~ /^#{Regexp.escape(lower_name)}/}
       if matches.length == 0
         output "A match for \'#{name}\' could not be found." unless options[:silent]
       elsif matches.length > 1
