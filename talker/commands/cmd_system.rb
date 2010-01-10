@@ -187,4 +187,22 @@ module Commands
     end
   end
 
+  define_command 'password' do
+    if !resident? && login_time < 300
+      output "Sorry, you need to be logged in for at least 5 minutes to set a password."
+    else
+      password_mode :on
+      if resident?
+        output "Please enter your current password."
+        send_prompt "Old Password > "
+        self.handler = :authenticate_for_change_password
+      else
+        output "Please enter a new password."
+        send_prompt "New Password > "
+        self.handler = :change_password
+      end
+    end
+  end
+  define_alias 'password', 'passwd'
+
 end

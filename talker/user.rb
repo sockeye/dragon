@@ -105,6 +105,37 @@ class User
     user_prompt
   end
 
+  def authenticate_for_change_password(password)
+    if password_matches?(password)
+      output "Please enter a new password."
+      send_prompt "New Password > "
+      self.handler = :change_password
+    else
+      output "Sorry, Incorrect password!"
+      self.handler = nil
+      password_mode :off
+    end
+  end
+  
+  def change_password(password)
+    if password.length < 3 || password.length > 8
+      output "New password must be between 3 and 8 characters long!"
+      send_prompt "New Password > "
+    else
+      was_resident = resident?
+      self.password = password
+      save
+      if !was_resident
+        output "Thank you for setting a password. Your name is now reserved for future visits."
+        output_to_all "^G-> ^n#{name} becomes a saved user!"
+      else
+        output "Password Changed."
+      end
+      self.handler = nil
+      password_mode :off
+    end
+  end
+
   def logout
     connected_users.delete(lower_name)
     @id = nil
@@ -150,17 +181,21 @@ class User
   end
 
   def handle_input(input_string)
-    unless input_string.empty?
-      @idle_message = nil
+    if handler
+      send(handler, input_string)
+    else
+      unless input_string.empty?
+        @idle_message = nil
 
-      (command_name, body) = split_input(input_string)
+        (command_name, body) = split_input(input_string)
     
-      command = find_command(command_name.downcase)
-      if command
-        command.execute(self, body)
-      end
+        command = find_command(command_name.downcase)
+        if command
+          command.execute(self, body)
+        end
       
-      @last_activity = Time.now
+        @last_activity = Time.now
+      end
     end
     user_prompt if handler.nil?
   end
