@@ -61,8 +61,8 @@ module Commands
         c.command_block = block
       else
         @command_list[name] = Command.new(name, block)
+        @visible_command_names << name
       end
-      @visible_command_names << name
     end
   end
 
