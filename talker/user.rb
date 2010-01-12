@@ -191,7 +191,7 @@ class User
     
         command = find_command(command_name.downcase)
         if command
-          command.execute(self, body)
+          command.execute(self, (body || "").gsub(/(\^+)$/, ''))
         end
       
         @last_activity = Time.now
