@@ -69,29 +69,7 @@ module Commands
 
   define_command 'examine' do |target_name|
     target = target_name.blank? ? self : find_entity(target_name)
-    if target
-      if target.class == User
-        buffer = title_line(target.name) + "\n"
-        buffer += "      First seen : #{target.first_seen}\n"
-        if target.logged_in?
-          buffer += "      Login time : #{time_in_words(target.login_time)}\n"
-          buffer += "       Idle time : #{time_in_words(target.idle_time)}\n"
-          buffer += "Total login time : #{time_in_words(target.total_time + target.login_time)}\n"
-        else
-          buffer += "Total login time : #{time_in_words(target.total_time)}\n"
-        end
-        buffer += "     Connections : #{target.total_connections}\n"
-        buffer += "            Rank : #{target.rank_name_with_colour}\n"
-        buffer += "          Drogna : #{target.money}\n"
-        buffer += blank_line
-      else
-        buffer = title_line("Social #{target.name}") + "\n"
-        buffer += "^LUntargeted^n\n#{target.notarget.gsub(/\^/, '^^')}\n" if !target.notarget.blank?
-        buffer += "^LTargeted^n\n#{target.target.gsub(/\^/, '^^')}\n" if !target.target.blank?
-        buffer += blank_line        
-      end
-      output buffer
-    end
+    output (title_line("#{target.class.name} #{target.name}") + "\n" + target.examine + blank_line) if target
   end
   define_alias 'examine', 'finger', 'profile', 'x', 'f'
 

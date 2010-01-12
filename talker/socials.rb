@@ -114,6 +114,12 @@ class Social
     end
   end
   
+  def examine
+    buffer =  "^LCreator^n\n#{@creator.blank? ? 'Unknown' : @creator}\n" 
+    buffer += "^LUntargeted^n\n#{@notarget.gsub(/\^/, '^^')}\n" if !@notarget.blank?
+    buffer += "^LTargeted^n\n#{@target.gsub(/\^/, '^^')}\n" if !@target.blank?
+    buffer
+  end
   
   def self.import
     Dir["import/socials/*"].each do |file_name|
