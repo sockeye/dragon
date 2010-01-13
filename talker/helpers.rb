@@ -4,11 +4,7 @@ module Helpers
   def output_to_all(message)
     connected_users.values.each { |u| u.output message unless u.muffled }
   end
-  
-  def all_users
-    Talker.instance.all_users
-  end
-  
+    
   def find_with_partial_matching(hash, name, options={})
     return nil if name.blank?
     lower_name = name.downcase
@@ -27,7 +23,7 @@ module Helpers
   end
   
   def find_user(name, options={})
-    find_with_partial_matching(Talker.instance.all_users, name, options)
+    find_with_partial_matching(all_users, name, options)
   end
     
   def find_connected_user(name, options={})
@@ -35,7 +31,6 @@ module Helpers
   end
 
   def find_social(name, options={})
-    socials = Social.socials
     find_with_partial_matching(socials, name, options)
   end
 
@@ -47,10 +42,7 @@ module Helpers
     elsif type == "social"
       find_social(name)
     else
-      e = find_user(name, :silent => true)
-      e = find_social(name, :silent => true) if e.nil?
-      output "A match for \'#{name}\' could not be found." if e.nil?
-      e
+      find_with_partial_matching(socials.merge(all_users), name)
     end
   end
   
@@ -66,12 +58,20 @@ module Helpers
     Talker.instance.all_users[name.downcase]
   end
   
+  def all_users
+    Talker.instance.all_users
+  end
+
   def connected_users
     Talker.instance.connected_users
   end
 
   def active_users
     connected_users.values.select {|u| u.active?}
+  end
+
+  def socials
+    Social.socials
   end
   
   def output(message)
