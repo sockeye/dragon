@@ -43,7 +43,11 @@ class Social
     end
     
     if !text.blank?
-      user.output_to_all "#{user.cname} #{process_dynatext(process_randoms(text), user, target, body)}^n"
+      if text =~ /<(message|S)>/ && body.blank?
+        user.output "Format: #{@name} <message>"
+      else
+        user.output_to_all "#{user.cname} #{process_dynatext(process_randoms(text), user, target, body)}^n"
+      end
     else
       user.output "Sorry, the social is down for maintenance."
     end
