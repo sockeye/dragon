@@ -191,7 +191,7 @@ class User
     
         command = find_command(command_name.downcase)
         if command
-          command.execute(self, (body || "").gsub(/(\^+)$/, ''))
+          command.execute(self, (body || "").gsub(/(\^+)$/, '').strip)
         end
       
         @last_activity = Time.now
@@ -307,8 +307,8 @@ class User
   private
 
   def split_input(string)
-    if string =~ /(^\W+)/
-      [$1.strip, string.sub(/(^\W+)/,'')]
+    if string =~ /(^\W)/
+      [$1.strip, string.sub(/(^\W)/,'')]
     else
       string.split(' ', 2)
     end
