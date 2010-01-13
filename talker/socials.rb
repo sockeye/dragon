@@ -67,8 +67,12 @@ class Social
         random_choices = []
         stored_string  = ""
       when "|", "[or]"
-        random_choices.push(stored_string)
-        stored_string = ""
+        if stack.empty?
+          stored_string << "|"
+        else
+          random_choices.push(stored_string)
+          stored_string = ""
+        end
       when "}", "[at random]"
         random_choices.push(stored_string)
         selected_choice = random_choices[rand(random_choices.length)]

@@ -50,6 +50,7 @@ class Talker
         @connected_users[u.lower_name] = u
       end
     end
+    EventMachine::add_periodic_timer( 1 ) { Talker.instance.tick }
   end
   
   def connection(signature, ip_address)
@@ -149,5 +150,14 @@ class Talker
   def debug_message(message)
     @connected_users.values.select {|u|u.debug}.each { |u| u.output "^g[debug] #{message}^n" }
   end  
+  
+  def tick
+    if (Time.now.to_i % 60) == 0
+      @connected_users.each do |name, u|
+        u.raw_send "\377\361" # send IAC NOP
+      end
+    end
+#    debug_message "Tick #{Time.now}"
+  end
   
 end
