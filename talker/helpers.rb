@@ -4,6 +4,11 @@ module Helpers
   def output_to_all(message)
     connected_users.values.each { |u| u.output message unless u.muffled }
   end
+  
+  def channel_output(message)
+    output_to_all message
+    talker_history.add message
+  end    
     
   def find_with_partial_matching(hash, name, options={})
     return nil if name.blank?
@@ -123,6 +128,10 @@ module Helpers
   def look
     num = connected_users.keys.length
     output "There #{is_are(num)} #{num} #{pluralise('user', num)} online: #{commas_and(connected_users.values.map{|u|u.name})}"
+  end
+  
+  def talker_history
+    Talker.instance.history
   end
   
   # send fully formatted message to a connection

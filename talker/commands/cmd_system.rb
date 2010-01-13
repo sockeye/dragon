@@ -190,4 +190,9 @@ module Commands
   end
   define_alias 'password', 'passwd'
 
+  define_command 'history' do
+    output title_line("History") + "\n" + talker_history.to_s + "\n" + blank_line
+  end
+  define_alias 'history', 'recall', 'review'
+
 end

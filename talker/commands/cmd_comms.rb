@@ -3,7 +3,7 @@ module Commands
     if message.blank?
       output "Format: say <message>"
     else
-      output_to_all "#{cname} says '#{message}^n'"
+      channel_output "#{cname} says '#{message}^n'"
     end
   end
   define_alias 'say', '`', '\'', '\"'
@@ -12,7 +12,7 @@ module Commands
     if message.blank?
       output "Format: emote <message>"
     else
-      output_to_all "#{cname} #{message}^n"
+      channel_output "#{cname} #{message}^n"
     end
   end
   define_alias 'emote', ';', ':', 'emtoe', 'emoet', 'emotes', 'me'
@@ -21,7 +21,7 @@ module Commands
     if message.blank?
       output "Format: echo <message>"
     else
-      output_to_all "[#{cname}] #{message}"
+      channel_output "[#{cname}] #{message}"
     end
   end
   define_alias 'echo', '+'

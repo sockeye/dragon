@@ -6,6 +6,7 @@ require 'talker/helpers'
 require 'talker/connection'
 require 'talker/user'
 require 'talker/textfile'
+require 'talker/history'
 
 require 'talker/commands'
 require 'talker/commands/cmd_system'
@@ -23,7 +24,8 @@ class Talker
   include Singleton
   
   attr_accessor :connected_users, :all_users, :output, :connections,
-                :talk_server_uptime, :connection_server_uptime, :shutdown
+                :talk_server_uptime, :connection_server_uptime, :shutdown,
+                :history
   attr_reader :current_id
   
   def initialize
@@ -34,6 +36,7 @@ class Talker
     @connection_server_uptime = nil
     @talk_server_uptime = Time.now
     @shutdown = false
+    @history = History.new
   end
   
   def run
@@ -44,6 +47,7 @@ class Talker
     Commands.add_commands(Social.socials)
     
     load_connections
+    load_history
     @connections.values.each do |c|
       if c.logged_in?
         u = find_or_add_user(c.user_name)
@@ -130,10 +134,17 @@ class Talker
     end
   end
 
+  def save_history
+    f = File.new("data/history.yml", "w")
+    f.puts YAML.dump(@history)
+    f.close
+  end
+
   def save
     puts "[saving]"
     save_connections
     save_connected_users
+    save_history
   end
 
   def load_connections
@@ -145,6 +156,14 @@ class Talker
       @connections = {}
     end
     puts "[loaded #{@connections.keys.length} connections]"
+  end
+
+  def load_history
+    if FileTest.exist?("data/history.yml") 
+      f = File.new("data/history.yml", "r")
+      @history = YAML.load(f.read)
+      f.close
+    end
   end
 
   def debug_message(message)
