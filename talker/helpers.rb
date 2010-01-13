@@ -36,7 +36,7 @@ module Helpers
 
   def find_social(name, options={})
     socials = Social.socials
-    find_with_partial_matching(socials, name, :silent => true)
+    find_with_partial_matching(socials, name, options)
   end
 
   def find_entity(name)
