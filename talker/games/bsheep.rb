@@ -28,6 +28,14 @@ class BattlesheepPlayer < Player
     state == :ready
   end
 
+  def has_won?
+    score > 15
+  end
+  
+  def pay_out
+    (16 - score) * 10
+  end
+  
   def create_board
     self.data[:board] = (0..7).map {|i|[].fill(0, 0..7)}
     randomise_board
@@ -86,7 +94,7 @@ class BattlesheepPlayer < Player
       buffer += '   ' + render_my_line(data[:board][i])
       case i
       when 0 then buffer += "      ^YB a t t l e   S h e e p"
-      when 2 then buffer += "      ^pSelect herd grazing positions"
+      when 2 then buffer += "      ^cSelect herd grazing positions"
       when 4 then buffer += "      ^nUse ^Wbsh random^n to randomize the herd grazing positions"
       when 5 then buffer += "      ^nand ^Wbsh ready^n once you have made your selection"
       end
@@ -158,18 +166,6 @@ class Battlesheep < Game
     @players.first
   end
 
-  def accepted?(user)
-    p = player(user)
-    p && p.state != nil
-  end
-  
-  def accept(user)
-    p = player(user)
-    if p && p.state.nil?
-      p.state = :accepted
-    end
-  end
-    
   def get_move(string)
     if (string.downcase =~ /([a-h])([1-8])/) == 0
       [$2.to_i - 1, $1.ord - 97]
@@ -228,16 +224,16 @@ module Commands
                 pbuffer = "^LMISS!^N It is now Farmer #{opp.name}'s turn"
                 obuffer = "Farmer #{p.name} tries #{message.upcase}. ^LMISS!^N It is now your turn"
               else
-                p.score = p.score + 1
+                p.score += 1
                 alive = opp.sheep_alive?(x, y)
                 pbuffer = "You try #{message.upcase}, ^RHIT!^N #{alive ? '' : 'The sheep is dead! '}You get another turn"
                 obuffer = "Farmer #{p.name} tries #{message.upcase}, ^RHIT!^N They #{alive ? '' : 'killed a sheep and '}get another turn"
               end
             
-              if p.score > 15
+              if p.has_won?
                 output p.board(opp)
                 opp.output opp.postboard(p)
-                pay_out = (16 - opp.score) * 10
+                pay_out = opp.pay_out
                 output_to_all "^g->^n #{p.name} beats #{opp.name} at Battlesheep, winning #{pay_out} drogna!"
                 self.money += pay_out
                 save
