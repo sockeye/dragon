@@ -66,7 +66,7 @@ EM.run {
          rescue
            puts "[Booting talker]"
            @pid = fork do
-             exec("ruby talk_server.rb")
+             exec("ruby19 talk_server.rb")
            end
            Process.detach(@pid)
            sleep 5
