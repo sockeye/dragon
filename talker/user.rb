@@ -181,6 +181,7 @@ class User
   end
 
   def handle_input(input_string)
+    @input_string = input_string
     if handler
       send(handler, input_string)
     else
@@ -199,6 +200,13 @@ class User
     end
     user_prompt if handler.nil?
   end
+
+  def execute_parent_command(parent_name)
+    c = find_command(parent_name)
+    (command_name, body) = split_input(@input_string)
+    c.execute(self, body, :sub_command => false)
+  end
+
 
   def idle_time
     Time.now - self.last_activity

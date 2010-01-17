@@ -1,4 +1,17 @@
 module Commands
+  define_command 'games' do
+    buffer = title_line("Games") + "\n"
+    if Game.games.length > 0
+      Game.games.each do |game|
+        buffer += "  " + game.description + "\n"
+      end
+    else
+      buffer += "  There are no games in progress.\n"
+    end
+    buffer += blank_line
+    output buffer
+  end
+  
   define_command 'dice' do
     num_word = %w{One Two Three Four Five Six}
     faces = [["     ", "  *  ", "     "],
@@ -56,49 +69,5 @@ module Commands
     end
   end
   define_alias 'coin', 'c'
-    
-  define_command 'staff' do
-    buffer = title_line('Staff') + "\n"
-    (0..5).each do |i|
-      rank = 6 - i
-      staff_at_rank = commas_and(all_users.values.select{|u| u.rank == rank}.map {|u| u.name})
-      buffer += sprintf("#{User::RANK_COLOUR[rank]}%10.10s ^n: #{staff_at_rank}\n", User::RANK[rank])
-    end
-    buffer += blank_line
-    output buffer
-  end
-  
-  define_command 'promote' do
-    if rank > 5
-      output "You are already a ^RKing^n!"
-    elsif !can_afford_promotion?
-      output "You need #{next_rank_cost} drogna for the next rank.^n"
-    else
-      promote!
-      output "Thank you for the donation!"
-      output_to_all "^G-> ^n#{name} has been promoted to a #{rank_name_with_colour}"
-      save
-    end
-  end
-  
-  define_command 'give' do |message|
-    (recipient_name, amount) = get_arguments(message, 2)
-    amount = amount.to_i
-    if recipient_name.blank? || amount < 1
-      output "Format: give <user> <amount>"
-    else
-      recipient = find_connected_user(recipient_name)
-      if recipient
-        if amount > money
-          output "You don't have that much to give."
-        else
-          self.money -= amount
-          recipient.money += amount
-          output_to_all "^g->^n #{cname} has just given #{recipient.cname} #{amount} drogna!"
-          save
-          recipient.save
-        end
-      end
-    end
-  end
+
 end

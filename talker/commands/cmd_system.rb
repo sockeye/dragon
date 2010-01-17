@@ -195,4 +195,24 @@ module Commands
   end
   define_alias 'history', 'recall', 'review'
 
+  define_command 'give' do |message|
+    (recipient_name, amount) = get_arguments(message, 2)
+    amount = amount.to_i
+    if recipient_name.blank? || amount < 1
+      output "Format: give <user> <amount>"
+    else
+      recipient = find_connected_user(recipient_name)
+      if recipient
+        if amount > money
+          output "You don't have that much to give."
+        else
+          self.money -= amount
+          recipient.money += amount
+          output_to_all "^g->^n #{cname} has just given #{recipient.cname} #{amount} drogna!"
+          save
+          recipient.save
+        end
+      end
+    end
+  end
 end

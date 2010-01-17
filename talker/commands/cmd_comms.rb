@@ -58,8 +58,8 @@ module Commands
       target = find_connected_user(target_name)
       if target
         space = message =~ /^[,']/ ? '' : ' '
-        target.output "^L> #{cname}^L#{space}#{message} (to you)"
-        output "^L> #{cname}^L#{space}#{message} (to #{target.cname}^L)"
+        target.output "^L> #{cname}^L#{space}#{message}^n (to you)^n"
+        output "^L> #{cname}^L#{space}#{message}^n (to #{target.cname}^n)^n"
         output_inactive_message(target)
       end
     end

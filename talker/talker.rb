@@ -9,13 +9,16 @@ require 'talker/textfile'
 require 'talker/history'
 
 require 'talker/commands'
+require 'talker/socials'
 require 'talker/commands/cmd_system'
 require 'talker/commands/cmd_user'
 require 'talker/commands/cmd_comms'
+require 'talker/commands/cmd_staff'
 require 'talker/commands/cmd_dev'
-require 'talker/commands/cmd_games'
 
-require 'talker/socials'
+require 'talker/games/game'
+require 'talker/games/base'
+require 'talker/games/bsheep'
 
 class Talker
   NAME    = 'Dragon World'

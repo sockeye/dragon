@@ -7,13 +7,15 @@ class Command
     @sub_commands = {}
   end
   
-  def execute(user, body)
+  def execute(user, body, options={})
     sub_command = nil
-    if @sub_commands && !body.blank? # try to find and execute a sub-command
-      (sub_command_name, body2) = body.split(' ', 2)
+    unless options[:sub_command] == false
+      if @sub_commands && !body.blank? # try to find and execute a sub-command
+        (sub_command_name, body2) = body.split(' ', 2)
   
-      sub_command = user.find_with_partial_matching(@sub_commands, sub_command_name, :silent => true)
-      sub_command.execute(user, body2) if sub_command
+        sub_command = user.find_with_partial_matching(@sub_commands, sub_command_name, :silent => true)
+        sub_command.execute(user, body2) if sub_command
+      end
     end
 
     if sub_command.nil?
@@ -82,5 +84,9 @@ module Commands
   
   def self.add_commands(commands)
     commands.each { |key, value| @command_list[key] = value }
+  end
+  
+  def self.lookup(name)
+    @command_list[name]
   end
 end
