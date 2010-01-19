@@ -23,7 +23,7 @@ EM.run {
       end
       (@port, *ip) = (get_peername[2,6].unpack "nC4")
       @ip = ip.join('.')
-      SendToTalker << "#{signature} connection #{@ip}"
+      SendToTalker << "#{signature} connection #{@ip}\n"
     end
 
     def process_talker_message(line)
@@ -47,7 +47,7 @@ EM.run {
     end
 
     def unbind
-      SendToTalker << "#{signature} disconnection"
+      SendToTalker << "#{signature} disconnection\n"
       ReceiveFromTalker.unsubscribe @channel
       puts "Telnet connection closed"
     end
