@@ -43,7 +43,7 @@ class Social
     end
     
     if !text.blank?
-      if text =~ /<(message|S)>/ && body.blank?
+      if text =~ /<([M|m]essage|S)>/ && body.blank?
         user.output "Format: #{@name} <message>"
       else
         user.channel_output "#{user.cname} #{process_dynatext(process_randoms(text), user, target, body)}^n"
