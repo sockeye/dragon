@@ -167,4 +167,8 @@ module TalkerUtilities
     g = self.gender || :female
     Social::GENDER_WORDS.has_key?(type) ? Social::GENDER_WORDS[type][g] : ""
   end
+  
+  def multi_target?(string)
+    string =~ /,/ || string =~ /^[1-9]/
+  end
 end

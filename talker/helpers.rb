@@ -35,6 +35,11 @@ module Helpers
     find_with_partial_matching(connected_users, name, options)
   end
 
+  def find_connected_users(names)
+    users = names.split(/,/).map {|name| find_connected_user(name)}
+    users.include?(nil) ? nil : users
+  end
+
   def find_social(name, options={})
     find_with_partial_matching(socials, name, options)
   end
@@ -57,6 +62,21 @@ module Helpers
       log 'unknown', "#{self.name} #{command_name}"
     end
     command
+  end
+  
+  def find_multi(target_names)
+    if target_names =~ /^[1-9]/
+      m = Multi.find(target_names.to_i)
+      if m.nil?
+        output "Multi (#{target_names.to_i}) does not exist."
+      elsif !m.member?(self)
+        output "You are not a member of multi (#{target_names.to_i})"
+        m = nil
+      end
+      m
+    else
+      Multi.find_or_create(find_connected_users(target_names + ",#{name}"))
+    end
   end
 
   def lookup_user(name)

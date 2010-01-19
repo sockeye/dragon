@@ -8,6 +8,7 @@ require 'talker/user'
 require 'talker/textfile'
 require 'talker/history'
 
+require 'talker/multis'
 require 'talker/commands'
 require 'talker/socials'
 require 'talker/commands/cmd_system'
