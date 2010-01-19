@@ -101,7 +101,7 @@ module Helpers
   
   def output(message)
     buffer = "\r\0" + colourise(message, self.colour).gsub("\n", "\\n") + "\033[0K\\n"
-    buffer += colourise(get_prompt, self.colour) if Talker.instance.current_id != id
+    buffer += (colourise(get_prompt, self.colour) + "\377\371") if Talker.instance.current_id != id
 
     raw_send buffer
   end
