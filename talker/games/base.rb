@@ -70,4 +70,13 @@ module Commands
   end
   define_alias 'coin', 'c'
 
+  define_command 'omnibus' do |message|
+    (origin, destination, time) = get_arguments(message, 3)
+    if origin.blank? || destination.blank? || time.blank?
+      output "Format: omnibus <origin> <destination> <time>"
+    else
+      output "Sorry no bus service at that time."
+    end
+  end
+
 end
