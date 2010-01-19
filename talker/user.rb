@@ -222,7 +222,7 @@ class User
   end
   
   def next_rank_cost
-    1000 * (2 ** rank)
+    1000000 * (2 ** rank)
   end
   
   def can_afford_promotion?
