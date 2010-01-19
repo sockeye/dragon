@@ -1,8 +1,15 @@
 -- D o c k y a r d   Established 5th January 2003
 
---Recent Changes---------------------------------------------------------------
-- New commands give, steal, staff
-- Wages paid
-- coin now costs money to play with a 1,000,000d prize for rolling an edge
-- othello can now be played for a wager
--------------------------------------------------------------------------------
+^B__/^YRecent Changes^B\_____________________________________________________________^n
+ - Better support for Crystal and standard telnet clients
+ - New command 'promote' to increase your staff level
+ - 'examine' now works on both users and socials
+ - New command 'games' lists all current games in progress
+ - Removed 'save' command, just set a password to save for the first time
+ - Staff names are shown in a different colour during communication
+ - Othello is down for maintenance
+ - Quiz is down for maintenance
+ - Connect 4 is down for maintenance
+ - Steal is down for maintenance
+ - Groups system has been removed
+^B_______________________________________________________________________________^n
