@@ -29,7 +29,7 @@ EM.run {
     def process_talker_message(line)
       (recipient, command, message) = line.split(/ /, 3)
       if recipient.to_i == signature
-        puts "Processing #{line.dump}"
+#        puts "Processing #{line.dump}"
         case command
         when "disconnect"
           close_connection_after_writing
@@ -66,7 +66,7 @@ EM.run {
          rescue
            puts "[Booting talker]"
            @pid = fork do
-             exec("ruby19 talk_server.rb")
+             exec("bash -c 'ruby19 talk_server.rb 2>>logs/crash.log'")
            end
            Process.detach(@pid)
            sleep 5

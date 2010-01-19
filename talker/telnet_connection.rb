@@ -2,7 +2,7 @@ require 'time'
 
 module TelnetConnection
   def post_init
-    puts "[Established connection with communication server]"
+    $stderr.puts "#{Time.now} [Established connection with communication server]"
     @talker  = Talker.instance
     
     # data is sent from the talker to the output channel, 
@@ -19,7 +19,7 @@ module TelnetConnection
     data.gsub!(/\0/, "") # ignore bare NULs
 
     while data.index("\377") # parse Telnet codes
-      puts "IAC FROM #{signature} #{data.dump}"
+      $stderr.puts "IAC FROM #{signature} #{data.dump}"
       if data.sub!(/(^|[^\377])\377[\375\376](.)/, "\\1")
       # answer DOs and DON'Ts with WON'Ts
       send_data("#{signature} send \377\374#{$2}") unless $2 == "\001" # unless TELOPT_ECHO
@@ -45,16 +45,16 @@ module TelnetConnection
 
       case command
       when "reset"
-        puts "RESET"
+        $stderr.puts "#{Time.now} RESET"
         @talker.disconnect_all
       when "uptime"
-        puts "UPTIME"
+        $stderr.puts "#{Time.now} UPTIME"
         Talker.instance.connection_server_uptime = Time.parse(message)
       when "connection"
-        puts "CONNECTION #{message}"
+        $stderr.puts "#{Time.now} CONNECTION #{message}"
         @talker.connection(signature, message)
       when "disconnection"
-        puts "DISCONNECTION #{message}"
+        $stderr.puts "#{Time.now} DISCONNECTION #{message}"
         @talker.disconnection(signature)
       when "input"
         message ||= ""
@@ -66,6 +66,6 @@ module TelnetConnection
   end
 
   def unbind
-    puts "[Lost connection]"
+    $stderr.puts "#{Time.now} [Lost connection]"
   end
 end

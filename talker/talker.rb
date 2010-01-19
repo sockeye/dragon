@@ -125,7 +125,6 @@ class Talker
   end
   
   def save_connections
-    puts "[saving connections]"
     f = File.new("data/connections.yml", "w")
     f.puts YAML.dump(@connections)
     f.close
@@ -144,7 +143,7 @@ class Talker
   end
 
   def save
-    puts "[saving]"
+    $stderr.puts "#{Time.now} [saving]"
     save_connections
     save_connected_users
     save_history
@@ -158,7 +157,7 @@ class Talker
     else
       @connections = {}
     end
-    puts "[loaded #{@connections.keys.length} connections]"
+    $stderr.puts "#{Time.now} [loaded #{@connections.keys.length} connections]"
   end
 
   def load_history

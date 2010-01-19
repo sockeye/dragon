@@ -60,14 +60,12 @@ class User
   end
   
   def save
-    puts "[saving user #{name}]"
     f = File.new(data_file_name, "w")
     f.puts YAML.dump(self)
     f.close 
   end
   
   def delete
-    puts "[delete user #{name}]"
     File.delete(data_file_name) if FileTest.exist?(data_file_name)
   end
 
