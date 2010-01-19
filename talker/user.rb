@@ -221,6 +221,10 @@ class User
     end
   end
   
+  def demote!
+    @rank -= 1 if @rank > 0
+  end
+  
   def next_rank_cost
     1000000 * (2 ** rank)
   end

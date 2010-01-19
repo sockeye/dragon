@@ -22,4 +22,15 @@ module Commands
       save
     end
   end
+
+  define_command 'demote' do
+    if rank <= 0
+      output "You can't go lower than Pheasant!"
+    else
+      demote!
+      output "You are demoted."
+      save
+    end
+  end
+
 end
