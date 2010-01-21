@@ -56,43 +56,54 @@ EM.run {
 
   class TalkerConnection < EM::Connection
     @@boot_count = 0
-    
+
+    def self.boot_talker
+      puts "[Booting talker]"
+      @pid = fork do
+        exec("bash -c 'ruby19 talk_server.rb 2>>logs/crash.log'")
+      end
+      Process.detach(@pid)
+    end
+
     def self.start
-      finished = false
+      @@timer = nil
+      trying = finished = false
       until finished
         begin
           EM.connect_unix_domain "socket", TalkerConnection
           finished = true
-         rescue
-           puts "[Booting talker]"
-           @pid = fork do
-             exec("bash -c 'ruby19 talk_server.rb 2>>logs/crash.log'")
-           end
-           Process.detach(@pid)
-           sleep 5
-         end
-       end
+        rescue
+          if !trying
+            trying = true
+            boot_talker
+            @@timer = EventMachine::PeriodicTimer.new(5) do
+              boot_talker
+            end
+          end
+        end
+      end
     end
     
     def post_init
-     puts "[Established connection with talker]"
-     @@boot_count += 1
-     @channel = SendToTalker.subscribe { |m| send_data m }
-     send_data "0 reset\n" if @@boot_count == 1
-     send_data "0 uptime #{TelnetServer.boot_time}\n"
+      @@timer.cancel unless @@timer.nil?
+      puts "[Established connection with talker]"
+      @@boot_count += 1
+      @channel = SendToTalker.subscribe { |m| send_data m }
+      send_data "0 reset\n" if @@boot_count == 1
+      send_data "0 uptime #{TelnetServer.boot_time}\n"
     end
 
     def receive_data data
-     ReceiveFromTalker << data
+      data.split("\n").each {|line|
+        EM.next_tick { EM.stop_event_loop } if line == "0 shutdown"
+      }
+      ReceiveFromTalker << data
     end
 
     def unbind
-     SendToTalker.unsubscribe @channel
-     TalkerConnection.start
+      SendToTalker.unsubscribe @channel
+      EM.defer proc {TalkerConnection.start}
     end
   end
-  p = proc {
-    TalkerConnection.start
-  }
-  EM.defer(p)
+  EM.defer proc {TalkerConnection.start}
 }

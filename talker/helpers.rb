@@ -140,8 +140,17 @@ module Helpers
   
   def reboot
     if developer?
+      debug_message "Rebooting..."
       Talker.instance.save
       Talker.instance.shutdown = true
+    end
+  end
+
+  def shutdown
+    if developer?
+      Talker.instance.output << "0 shutdown\n"
+      Talker.instance.save
+      EM.next_tick { sleep 3; EM.stop_event_loop }
     end
   end
   

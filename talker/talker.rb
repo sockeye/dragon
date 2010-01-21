@@ -84,6 +84,15 @@ class Talker
   def disconnect_all
     @connections = {}
     @connected_users = {}
+    @all_users.each {|name, u| 
+      if !u.resident?
+        u.delete
+      elsif !u.id.nil?
+        u.id = nil
+        u.save
+      end
+    }
+    @all_users.delete_if {|name, u| !u.resident?}
     save
   end
   
@@ -112,7 +121,7 @@ class Talker
     end
     @current_id = nil
     if @shutdown
-      EM.stop_event_loop 
+      EM.next_tick { EM.stop_event_loop }
     end
   end
   
