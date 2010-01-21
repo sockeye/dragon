@@ -1,15 +1,22 @@
-Dragon Talk Server
+== Dragon Talk Server
 
 This code is copyright (c) 2010 Dockyard Enterprises. All rights reserved.
 You may not read, copy, modify or run the code without a license. Offenders 
 may be subject to punitive action. You may not continue reading beyond this
 point without a license.
 
-Requirements
-ruby 1.9.1
+== Requirements
+ruby 1.9.1 - assumes that the ruby binary is called ruby19
 eventmachine gem
 
-Booting
-ruby connection_server.rb
+== Booting
+The talker consists of two processes. The connection server accepts connections and acts as a proxy between the user and the main talker process. It will attempt to boot the main talker process if it
+can not make a connection. If the talker process crashes the connections will be maintained and the
+talker will be reloaded.
 
-The connection server will automatically start the talk server process.
+To start the connection server type:
+ruby19 connection_server.rb
+
+The main talker process will be automatically started if it isn't already running. Killing the 
+connection server will not stop the talker process. Use the 'shutdown' command inside the talker or
+if this is not possible then kill the process from the terminal.
