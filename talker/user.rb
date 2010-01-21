@@ -197,6 +197,7 @@ class User
       end
     end
     user_prompt if handler.nil?
+    @input_string = nil
   end
 
   def execute_parent_command(parent_name)
