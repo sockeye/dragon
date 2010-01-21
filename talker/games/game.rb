@@ -76,4 +76,18 @@ class Game
   def destroy
     @@games.delete_if {|g|g == self}
   end
+  
+  def self.save
+    f = File.new("data/games.yml", "w")
+    f.puts YAML.dump(@@games)
+    f.close
+  end
+  
+  def self.load
+    if FileTest.exist?("data/games.yml") 
+      f = File.new("data/games.yml", "r")
+      @@games = YAML.load(f.read)
+      f.close
+    end
+  end
 end

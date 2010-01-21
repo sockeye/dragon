@@ -5,4 +5,5 @@ import/
 
 data/connections.yml
 data/history.yml
+data/games.yml
 socket

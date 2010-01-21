@@ -49,6 +49,7 @@ class Talker
     @all_users = User.load_all
     Social.import
     Commands.add_commands(Social.socials)
+    Game.load
     
     load_connections
     load_history
@@ -157,6 +158,7 @@ class Talker
     save_connections
     save_connected_users
     save_history
+    Game.save
   end
 
   def load_connections
