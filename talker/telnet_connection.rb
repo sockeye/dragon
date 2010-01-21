@@ -22,13 +22,13 @@ module TelnetConnection
       $stderr.puts "IAC FROM #{signature} #{data.dump}"
       if data.sub!(/(^|[^\377])\377[\375\376](.)/, "\\1")
       # answer DOs and DON'Ts with WON'Ts
-      send_data("#{signature} send \377\374#{$2}") unless $2 == "\001" # unless TELOPT_ECHO
+      send_data("#{signature} send \377\374#{$2}\n") unless $2 == "\001" # unless TELOPT_ECHO
       elsif data.sub!(/(^|[^\377])\377[\373\374](.)/, "\\1")
       # answer WILLs and WON'Ts with DON'Ts
-      send_data("#{signature} send \377\376#{$2}")
+      send_data("#{signature} send \377\376#{$2}\n")
       elsif data.sub!(/(^|[^\377])\377\366/, "\\1")
       # answer "Are You There" codes
-      send_data("#{signature} send Still here, yes.")
+      send_data("#{signature} send Still here, yes.\n")
       elsif data.sub!(/(^|[^\377])\377\364/, "\\1")
       # do nothing - ignore IP Telnet codes
       elsif data.sub!(/(^|[^\377])\377[^\377]/, "\\1")

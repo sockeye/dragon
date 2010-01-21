@@ -12,8 +12,8 @@ class Connection
   end
 
   def start_login
-    output (get_text "connect_screen.1")
-    send_prompt "Please enter your nickname: "
+    output (get_text "connect_screen.1") + "\nWelcome, please enter your nickname."
+    send_prompt "Nickname: "
     @login_stage = :handle_name
   end
 
@@ -42,7 +42,7 @@ class Connection
         end
       end
     end
-    send_prompt "Please enter your nickname: " if @login_stage == :handle_name
+    send_prompt "Nickname: " if @login_stage == :handle_name
   end
 
   def ask_for_password
@@ -54,7 +54,8 @@ class Connection
 
   def handle_password(string)
     if string.empty?
-      send_prompt "Please enter your nickname: "
+      output "Please enter your nickname."
+      send_prompt "Nickname: "
       password_mode(:off)
       @login_stage = :handle_name
     elsif string.downcase == "quit"
