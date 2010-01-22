@@ -46,7 +46,7 @@ class Social
       if text =~ /<([M|m]essage|S)>/ && body.blank?
         user.output "Format: #{@name} <message>"
       else
-        user.channel_output "#{user.cname} #{process_dynatext(process_randoms(text), user, target, body)}^n"
+        user.channel_output "#{user.cname} #{process_dynatext(process_randoms(text), user, target, body)}^n".gsub("\r\n", "")
       end
     else
       user.output "Sorry, the social is down for maintenance."
@@ -134,13 +134,19 @@ class Social
       name = File.basename(file_name)
 
       s = {}
+      current_token = nil
       File.foreach(file_name) do |line|
-        (token, value) = line.split(':', 2)
-        s[token.strip] = value.strip if token && value
+        if line =~ /^[a-z\-]+:/
+          (token, value) = line.split(':', 2)
+          current_token = token.strip
+          s[current_token] = value.strip.gsub('!newline!', "\n") if current_token && value
+        else
+          value = line
+          s[current_token] += value.strip.gsub('!newline!', "\n") if s.has_key?(current_token)
+        end 
       end
 
-#      @socials[name.downcase] = Social.new(name.downcase, s['creator'] || "", s['nonegroup'] || "", s['usergroup'] || "")
-      @socials[name.downcase] = Social.new(name.downcase, s['creator'] || "", s['nt-u'] || "", s['ut-u'] || "")
+       @socials[name.downcase] = Social.new(name.downcase, s['creator'] || "", s['nt-u'] || "", s['ut-u'] || "")
     end
     
   end
