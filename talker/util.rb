@@ -22,7 +22,7 @@ module TalkerUtilities
       return false
     end
     
-    if %w{admin all announce bollocks cunt connect directed everyone everybody foreskin fuck games newbie newbies public private settext shit socials you }.include?(name.downcase)
+    if %w{admin all announce bank bollocks cunt connect directed everyone everybody foreskin fuck game games item newbie newbies object public private settext shit social socials you wank }.include?(name.downcase)
       output "Sorry, that name can not be used."
       return false
     end
