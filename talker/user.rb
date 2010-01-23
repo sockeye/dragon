@@ -1,3 +1,4 @@
+# encoding: utf-8
 class User
   include Helpers
   
@@ -21,7 +22,7 @@ class User
   attr_reader :rank
   attr_accessor :debug
 
-  attr_accessor :id, :handler, :ip_address
+  attr_accessor :id, :handler, :ip_address, :charset
 
   attr_accessor :idle_message, :muffled
 

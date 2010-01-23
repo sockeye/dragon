@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Commands
   define_command 'idlemsg' do |message|
     if message.blank?
@@ -92,7 +93,7 @@ module Commands
     elsif message == "wands"
       self.colour = :wands
       output "You are now viewing colour wands."
-    else message.blank?
+    else
       output "Format: colour [on|off|wands]"
     end
     save
@@ -118,6 +119,20 @@ module Commands
       output "You are no longer viewing the debug channel."
     end
     save
+  end
+  
+  define_command 'charset' do |message|
+    if message == "unicode" || message == "utf8"
+      self.charset = :unicode
+      output "Your character set is now ^Lunicode^n."
+      save
+    elsif message == "ascii"
+      self.charset = :ascii
+      output "Your character set is now ^Lascii^n."
+      save
+    else
+      output "Your character set is currently ^L#{charset}^n.\nFormat: charset [unicode|ascii]"
+    end
   end
   
 end

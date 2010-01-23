@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Textfile
   def self.load
     @textfiles = {}

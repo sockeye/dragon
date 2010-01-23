@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Commands
   define_command 'games' do
     buffer = title_line("Games") + "\n"
@@ -14,12 +15,12 @@ module Commands
   
   define_command 'dice' do
     num_word = %w{One Two Three Four Five Six}
-    faces = [["     ", "  *  ", "     "],
-             ["*    ", "     ", "    *"],
-             ["*    ", "  *  ", "    *"],
-             ["*   *", "     ", "*   *"],
-             ["*   *", "  *  ", "*   *"],
-             ["*   *", "*   *", "*   *"]]
+    faces = [["     ", "  \u{25cf}  ", "     "],
+             ["\u{25cf}    ", "     ", "    \u{25cf}"],
+             ["\u{25cf}    ", "  \u{25cf}  ", "    \u{25cf}"],
+             ["\u{25cf}   \u{25cf}", "     ", "\u{25cf}   \u{25cf}"],
+             ["\u{25cf}   \u{25cf}", "  \u{25cf}  ", "\u{25cf}   \u{25cf}"],
+             ["\u{25cf}   \u{25cf}", "\u{25cf}   \u{25cf}", "\u{25cf}   \u{25cf}"]]
     
     roll1 = rand(6)
     roll2 = rand(6)
@@ -40,11 +41,11 @@ module Commands
       "A #{num_word[roll1]} and a #{num_word[roll2]}"
     end
     
-    output "   ^B-------     -------       ^NYou roll two dice and get:
-  ^B| ^Y#{faces[roll1][0]}^B |   | ^Y#{faces[roll2][0]}^B |      ^N#{result_text}
-  ^B| ^Y#{faces[roll1][1]}^B |   | ^Y#{faces[roll2][1]}^B |^N
-  ^B| ^Y#{faces[roll1][2]}^B |   | ^Y#{faces[roll2][2]}^B |      ^NTotal Score: #{score}
-   ^B-------     -------^N"
+    output "  ^B\u{250c}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2510}   \u{250c}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2510}      ^NYou roll two dice and get:
+  ^B\u{2502} ^Y#{faces[roll1][0]}^B \u{2502}   \u{2502} ^Y#{faces[roll2][0]}^B \u{2502}      ^N#{result_text}
+  ^B\u{2502} ^Y#{faces[roll1][1]}^B \u{2502}   \u{2502} ^Y#{faces[roll2][1]}^B \u{2502}^N
+  ^B\u{2502} ^Y#{faces[roll1][2]}^B \u{2502}   \u{2502} ^Y#{faces[roll2][2]}^B \u{2502}      ^NTotal Score: #{score}
+  ^B\u{2514}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2518}   \u{2514}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2500}\u{2518}^N"
   end
   define_alias 'dice', 'roll', 'd'
   

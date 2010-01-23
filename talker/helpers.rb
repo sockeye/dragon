@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Helpers
   include TalkerUtilities
     
@@ -100,13 +101,13 @@ module Helpers
   end
   
   def output(message)
-    buffer = "\r" + colourise(message, self.colour).gsub("\n", "\\n") + "\033[0K\\n"
-    buffer += (colourise(get_prompt, self.colour) + "\377\371") if Talker.instance.current_id != id
+    buffer = "\r" + colourise(encode_string(message, charset), self.colour).gsub("\n", "\\n") + "\033[0K\\n"
+    buffer += (colourise(encode_string(get_prompt, charset), self.colour) + "\377\371") if Talker.instance.current_id != id
     raw_send buffer
   end
   
   def send_prompt(message)
-    raw_send "\r#{colourise(message, self.colour)}\377\371"
+    raw_send "\r#{colourise(encode_string(message, charset), self.colour)}\377\371"
   end
 
   def password_mode(state)  # IAC WILL ECHO  # IAC WONT ECHO

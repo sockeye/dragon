@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Commands
   define_command 'reboot' do
     if developer?
@@ -23,4 +24,8 @@ module Commands
   define_command 'multis' do
     output title_line("Multis") + "\n" + Multi.view + "\n" + blank_line
   end
+  
+#  define_command 'dectest' do
+#    output "\033(0 k l m n o p q r s t u v w x }\033(B"
+#  end
 end

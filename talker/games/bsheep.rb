@@ -1,3 +1,4 @@
+# encoding: utf-8
 class BattlesheepPlayer < Player
   def initialize(user, state)
     super(user, state)
@@ -122,27 +123,27 @@ class BattlesheepPlayer < Player
   def render_my_line(data)
     data.map do|i| 
       if i == 0
-        "^g-"
+        "^g\u{2591}"
       elsif i < 10
-        "^W@"
+        "^W\u{25cf}"
       elsif i == 10
-        "^d="
+        "^y\u{263c}"
       else
-        "^RX"
+        "^R\u{00d7}"
       end
-    end.join(' ') + "^n"
+    end.join(" ") + "^n"
   end
   
   def render_opponent_line(data)
     data.map do|i| 
       if i < 10
-        "^g?"
+        "^g\u{2591}"
       elsif i == 10
-        "^d="
+        "^y\u{263c}"
       else
-        "^RX"
+        "^R\u{00d7}"
       end
-    end.join(' ') + "^n"
+    end.join(" ") + "^n"
   end
   
 end
@@ -234,7 +235,7 @@ module Commands
                 output p.board(opp)
                 opp.output opp.postboard(p)
                 pay_out = opp.pay_out
-                output_to_all "^g->^n #{p.name} beats #{opp.name} at Battlesheep, winning #{pay_out} drogna!"
+                output_to_all "^g\u{25ba}^n #{p.name} beats #{opp.name} at Battlesheep, winning #{pay_out}\u{20ab}!"
                 self.money += pay_out
                 save
                 game.destroy
@@ -341,7 +342,7 @@ module Commands
         output "You can't cheat before you've started playing!"
       else
         opp = game.find_opponent(p)
-        output_to_all "^g->^n #{p.name} just tried to cheat at Battle Sheep! #{opp.name} wins!"
+        output_to_all "^g\u{25ba}^n #{p.name} just tried to cheat at Battle Sheep! #{opp.name} wins!"
         game.destroy
       end
     end

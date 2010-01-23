@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'time'
 
 module TelnetConnection
@@ -18,22 +19,22 @@ module TelnetConnection
     data.gsub!(/\015\0/, "") # ignore bare CRs
     data.gsub!(/\0/, "") # ignore bare NULs
 
-    while data.index("\377") # parse Telnet codes
+    while data.index(Regexp.new('\377', nil, 'n')) # parse Telnet codes
       $stderr.puts "IAC FROM #{signature} #{data.dump}"
-      if data.sub!(/(^|[^\377])\377[\375\376](.)/, "\\1")
+      if data.sub!(Regexp.new('(^|[^\377])\377[\375\376](.)', nil, 'n'), "\\1")
       # answer DOs and DON'Ts with WON'Ts
       send_data("#{signature} send \377\374#{$2}\n") unless $2 == "\001" # unless TELOPT_ECHO
-      elsif data.sub!(/(^|[^\377])\377[\373\374](.)/, "\\1")
+      elsif data.sub!(Regexp.new('(^|[^\377])\377[\373\374](.)', nil, 'n'), "\\1")
       # answer WILLs and WON'Ts with DON'Ts
       send_data("#{signature} send \377\376#{$2}\n")
-      elsif data.sub!(/(^|[^\377])\377\366/, "\\1")
+      elsif data.sub!(Regexp.new('(^|[^\377])\377\366', nil, 'n'), "\\1")
       # answer "Are You There" codes
       send_data("#{signature} send Still here, yes.\n")
-      elsif data.sub!(/(^|[^\377])\377\364/, "\\1")
+      elsif data.sub!(Regexp.new('(^|[^\377])\377\364', nil, 'n'), "\\1")
       # do nothing - ignore IP Telnet codes
-      elsif data.sub!(/(^|[^\377])\377[^\377]/, "\\1")
+      elsif data.sub!(Regexp.new('(^|[^\377])\377[^\377]', nil, 'n'), "\\1")
       # do nothing - ignore other Telnet codes
-      elsif data.sub!(/\377\377/, "\377")
+      elsif data.sub!(Regexp.new('\377\377', nil, 'n'), "\377")
       # do nothing - handle escapes
       end
     end
@@ -60,6 +61,7 @@ module TelnetConnection
         message ||= ""
         original_length = message.length
         parse_telnet(signature, message)
+        message.force_encoding('utf-8')
         @talker.input(signature, message) unless original_length > 0 && message.length == 0
       end
     end

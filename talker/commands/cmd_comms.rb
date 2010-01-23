@@ -1,9 +1,10 @@
+# encoding: utf-8
 module Commands
   define_command 'say' do |message|
     if message.blank?
       output "Format: say <message>"
     else
-      channel_output "#{cname} says '#{message}^n'"
+      channel_output "#{cname} says \u{2018}#{message}^n\u{2019}"
     end
   end
   define_alias 'say', '`', '\'', '\"'
@@ -45,8 +46,8 @@ module Commands
           else
             ['tell', '']
           end
-          target.output "^L> #{cname}^L #{format[0]}s #{format[1]}you \'#{message}\'^n"
-          output "^L> You #{format[0]} #{format[1]}#{target.cname}^L \'#{message}\'^n"
+          target.output "^L> #{cname}^L #{format[0]}s #{format[1]}you \u{2018}#{message}^L\u{2019}^n"
+          output "^L> You #{format[0]} #{format[1]}#{target.cname}^L \u{2018}#{message}^L\u{2019}^n"
           output_inactive_message(target)
         end
       end

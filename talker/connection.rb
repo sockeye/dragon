@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Connection
   include Helpers
   
@@ -87,6 +88,10 @@ class Connection
 
   def colour
     false
+  end
+  
+  def charset
+    :ascii
   end
   
   def get_prompt

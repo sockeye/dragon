@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Player
   attr_reader :name
   attr_accessor :state, :data, :score

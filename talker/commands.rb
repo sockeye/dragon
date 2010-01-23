@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Command
   attr_accessor :command_block, :sub_commands
   

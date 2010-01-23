@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Commands
   define_command 'staff' do
     buffer = title_line('Staff') + "\n"

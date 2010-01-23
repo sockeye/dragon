@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Commands
   define_command 'commands' do
     output title_line("Commands") + "\n" + Commands.names.join(", ") + "\n" + blank_line
@@ -96,7 +97,7 @@ module Commands
 
   define_command 'whod' do
     output title_line("Who Debug") + "\n" +
-      active_users.map { |u| sprintf("%15.15s #{u.debug ? 'Yes' : 'No'}^n", u.name) }.join("\n") + "\n" + 
+      active_users.map { |u| sprintf("%15.15s [#{u.charset.to_s}] #{u.debug ? '[Debug]' : ''}^n", u.name) }.join("\n") + "\n" + 
       blank_line
   end
   define_alias 'who', 'w'
@@ -126,7 +127,7 @@ module Commands
     else
       buffer = title_line("User Activity") + "\n"
       active_users.each do |u|
-        bars = sprintf("%-45s", ('=' * (((5400 - u.idle_time) / 120)+1)) + " #{u.idle_message}")
+        bars = sprintf("%-45s", ("\u{25a0}" * (((5400 - u.idle_time) / 120)+1)) + " #{u.idle_message}")
         buffer += sprintf("%15.15s ^C|^R#{bars.slice(0,15)}^C|^Y#{bars.slice(15,15)}^C|^G#{bars.slice(30,15)}^C| ^c#{short_time(u.idle_time)}^n\n", u.name)
       end
       buffer += blank_line

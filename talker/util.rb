@@ -1,3 +1,4 @@
+# encoding: utf-8
 module TalkerUtilities
   def valid_name?(name)
     len = name.length
@@ -147,11 +148,11 @@ module TalkerUtilities
   end
   
   def title_line(text)
-    "^B__/^Y#{text}^B\\" + ('_' * (75 - text.length)) + "^n"
+    "^B\u{2500}\u{2500}|^Y#{text}^B|" + ("\u{2500}" * (75 - text.length)) + "^n"
   end
   
   def blank_line
-    "^B" + '_' * 79 + "^n\n"
+    "^B" + "\u{2500}" * 79 + "^n\n"
   end
   
   def get_arguments(string, num)
@@ -170,5 +171,132 @@ module TalkerUtilities
   
   def multi_target?(string)
     string =~ /,/ || string =~ /^[1-9]/
+  end
+
+  UNICODE_FALLBACKS = {
+    "\u{00a3}" => "#",   # pound
+    "\u{20ac}" => "E",    # euro
+    "\u{2013}" => "-",   # en dash
+    "\u{2014}" => "-",   # em dash
+    "\u{2015}" => "-",   # horizontal bar
+    "\u{2018}" => "'",   # open single quote
+    "\u{2019}" => "'",   # close single quote
+    "\u{201c}" => "\"",   # open double quote
+    "\u{201d}" => "\"",   # close double quote
+    "\u{20ab}" => "d",   # drogna
+    "\u{2591}" => "-",   # bsh grass
+    "\u{25cf}" => "*",   # black circle
+    "\u{263c}" => "=",   # crater
+    "\u{00d7}" => "X",   # multiply
+    "\u{25ba}" => "->",  # solid arrow right
+    "\u{266a}" => "o/~", # eighth note
+    "\u{266b}" => "o/~", # beamed eighth notes
+    "\u{25a0}" => "=",   # black square
+    "\u{2500}" => "-",   # box drawing horizontal line
+    "\u{2502}" => "|",   # box drawing vertical line
+    "\u{250c}" => " ",   # box down and right
+    "\u{2510}" => " ",   # box down and left
+    "\u{2514}" => " ",   # box up and right
+    "\u{2518}" => " ",   # box up and left
+    "\u{2524}" => "/",   # box vertical and left
+    "\u{251c}" => "\\",  # box vertical and right
+    "\u{2550}" => "=",   # box double horizontal line
+    "\u{255e}" => "|",   # box vertical single and right double
+    "\u{256a}" => "|",   # box vertical singe and horizontal double
+    "\u{2561}" => "|",   # box vertical single and left double
+    "\u{2660}" => "(S)", # spade
+    "\u{2663}" => "(C)", # club
+    "\u{2665}" => "(H)", # heart
+    "\u{2666}" => "(D)", # diamond
+    "\u{00a0}" => " ",   # no-break space
+    "\u{00a1}" => "!",
+    "\u{00a2}" => "c",
+    "\u{00a5}" => "Y",
+    "\u{00a6}" => "|",
+    "\u{00a9}" => "(c)",
+    "\u{00ab}" => "<<",
+    "\u{00ac}" => "!",
+    "\u{00ad}" => "-",
+    "\u{00ae}" => "(r)",
+    "\u{00b1}" => "+-",
+    "\u{00bb}" => ">>",
+    "\u{00bc}" => "1/4",
+    "\u{00bd}" => "1/2",
+    "\u{00be}" => "3/4",
+    "\u{00bf}" => "?",
+    "\u{00c0}" => "A",
+    "\u{00c1}" => "A",
+    "\u{00c2}" => "A",
+    "\u{00c3}" => "A",
+    "\u{00c4}" => "A",
+    "\u{00c5}" => "A",
+    "\u{00c6}" => "AE",
+    "\u{00c7}" => "C",
+    "\u{00c8}" => "E",
+    "\u{00c9}" => "E",
+    "\u{00ca}" => "E",
+    "\u{00cb}" => "E",
+    "\u{00cc}" => "I",
+    "\u{00cd}" => "I",
+    "\u{00ce}" => "I",
+    "\u{00cf}" => "I",
+    "\u{00d0}" => "Dh",
+    "\u{00d1}" => "N",
+    "\u{00d2}" => "O",
+    "\u{00d3}" => "O",
+    "\u{00d4}" => "O",
+    "\u{00d5}" => "O",
+    "\u{00d6}" => "O",
+    "\u{00d7}" => "x",
+    "\u{00d8}" => "O",
+    "\u{00d9}" => "U",
+    "\u{00da}" => "U",
+    "\u{00db}" => "U",
+    "\u{00dc}" => "U",
+    "\u{00dd}" => "Y",
+    "\u{00de}" => "Th",
+    "\u{00df}" => "ss",
+    "\u{00e0}" => "a",
+    "\u{00e1}" => "a",
+    "\u{00e2}" => "a",
+    "\u{00e3}" => "a",
+    "\u{00e4}" => "a",
+    "\u{00e5}" => "a",
+    "\u{00e6}" => "ae",
+    "\u{00e7}" => "c",
+    "\u{00e8}" => "e",
+    "\u{00e9}" => "e",
+    "\u{00ea}" => "e",
+    "\u{00eb}" => "e",
+    "\u{00ec}" => "i",
+    "\u{00ed}" => "i",
+    "\u{00ee}" => "i",
+    "\u{00ef}" => "i",
+    "\u{00f0}" => "dh",
+    "\u{00f1}" => "n",
+    "\u{00f2}" => "o",
+    "\u{00f3}" => "o",
+    "\u{00f4}" => "o",
+    "\u{00f5}" => "o",
+    "\u{00f6}" => "o",
+    "\u{00f7}" => "/",
+    "\u{00f8}" => "o",
+    "\u{00f9}" => "u",
+    "\u{00fa}" => "u",
+    "\u{00fb}" => "u",
+    "\u{00fc}" => "u",
+    "\u{00fd}" => "y",
+    "\u{00fe}" => "th",
+    "\u{00ff}" => "y"
+  }
+  
+  def encode_string(message, encoding)
+    if encoding == :unicode
+      message
+    else
+      UNICODE_FALLBACKS.each { |utf8, ascii| message = message.gsub(utf8, ascii) }
+      
+      message.encode("us-ascii", :undef => :replace, :replace => '')
+    end
   end
 end
