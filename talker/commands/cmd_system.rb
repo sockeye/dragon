@@ -9,7 +9,7 @@ module Commands
   end
   
   define_command 'changes' do 
-    output Textfile.get_text "changes"
+    output title_line("Recent Changes") + "\n" + get_text("changes") + "\n" + blank_line
   end
   
   define_command 'testcard' do 

@@ -208,6 +208,7 @@ module TalkerUtilities
     "\u{2663}" => "(C)", # club
     "\u{2665}" => "(H)", # heart
     "\u{2666}" => "(D)", # diamond
+    "\u{2022}" => "-",   # bullet
     "\u{00a0}" => " ",   # no-break space
     "\u{00a1}" => "!",
     "\u{00a2}" => "c",

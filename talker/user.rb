@@ -83,7 +83,7 @@ class User
     @muffled = false
     
     if resident?
-      output get_text("changes")      
+      output title_line("Recent Changes") + "\n" + get_text("changes") + "\n" + blank_line
     else
       output get_text("welcome_newuser")
     end
@@ -91,9 +91,8 @@ class User
     old_connection = connections[old_id]
 
     if old_connection.nil?
-      output_to_all "^g>^G> ^n#{name} #{get_connect_message} ^G<^g<^n"
       connected_users[lower_name] = self
-      output "\n^g>^G> ^nWelcome to Dragon World ^G<^g<^n\n"
+      output_to_all "^g>^G> ^n#{name} #{get_connect_message} ^G<^g<^n"
     else
       old_connection.output "[Reconnection from #{connection.ip_address}]"
       old_connection.disconnect
