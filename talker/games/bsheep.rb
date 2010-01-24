@@ -185,13 +185,17 @@ module Commands
       else
         opponent = find_connected_user(message)
         if opponent
-          game = Battlesheep.find(opponent)
-          if game
-            output "Sorry, that user is already playing a game of Battlesheep."
+          if opponent == self
+            output "You can't challenge yourself."
           else
-            game = Battlesheep.new(self, opponent)
-            opponent.output "^G-> ^n#{name} has challenged you to a game of Battlesheep\n^LType 'bsh accept' or 'bsh decline'.^n"
-            output Textfile.get_text("rules_bships") + "\nYou challenge #{opponent.name} to a game of Battlesheep."
+            game = Battlesheep.find(opponent)
+            if game
+              output "Sorry, that user is already playing a game of Battlesheep."
+            else
+              game = Battlesheep.new(self, opponent)
+              opponent.output "^G-> ^n#{name} has challenged you to a game of Battlesheep\n^LType 'bsh accept' or 'bsh decline'.^n"
+              output Textfile.get_text("rules_bships") + "\nYou challenge #{opponent.name} to a game of Battlesheep."
+            end
           end
         end
       end
