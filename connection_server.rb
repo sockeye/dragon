@@ -85,6 +85,7 @@ EM.run {
               boot_talker
             end
           end
+          sleep 1
         end
       end
     end
