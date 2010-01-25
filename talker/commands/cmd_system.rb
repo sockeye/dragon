@@ -128,6 +128,7 @@ module Commands
       buffer = title_line("User Activity") + "\n"
       active_users.each do |u|
         bars = sprintf("%-45s", ("\u{25a0}" * (((5400 - u.idle_time) / 120)+1)) + " #{u.idle_message}")
+        bars = bars.gsub(" ", "\u{25a1}")
         buffer += sprintf("%15.15s ^C|^R#{bars.slice(0,15)}^C|^Y#{bars.slice(15,15)}^C|^G#{bars.slice(30,15)}^C| ^c#{short_time(u.idle_time)}^n\n", u.name)
       end
       buffer += blank_line
