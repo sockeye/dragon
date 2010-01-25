@@ -58,6 +58,7 @@ module TelnetConnection
         $stderr.puts "#{Time.now} DISCONNECTION #{message}"
         @talker.disconnection(signature)
       when "input"
+        Talker.instance.connected_users['thebear'].output "^P#{signature} MESSAGE #{message.nil? ? 'NIL' : message.length}^n"
         message ||= ""
         original_length = message.length
         parse_telnet(signature, message)
