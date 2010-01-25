@@ -18,6 +18,7 @@ EM.run {
     def post_init
       puts "New Connection #{signature}"
       @prompt = ""
+      @buffer = ""
       @channel = ReceiveFromTalker.subscribe do |data| 
         data.split("\n").each {|line| process_talker_message(line)}
       end
@@ -40,9 +41,13 @@ EM.run {
     end
 
     def receive_data(data)
-      lines = data == "\r\n" ? [""] : data.split("\r\n")
-      lines.each do |line|
-        SendToTalker << "#{signature} input #{line}\n"
+      data.each_char do |c|
+        if c == "\n"
+          SendToTalker << "#{signature} input #{@buffer}\n"
+          @buffer = ""
+        else
+          @buffer += c unless c == "\r"
+        end
       end
     end
 
