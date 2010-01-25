@@ -61,8 +61,7 @@ module TelnetConnection
         message ||= ""
         original_length = message.length
         parse_telnet(signature, message)
-        message.force_encoding('utf-8')
-        @talker.input(signature, message) unless original_length > 0 && message.length == 0
+        @talker.input(signature, message.force_encoding('utf-8')) unless original_length > 0 && message.length == 0
       end
     end
   end
