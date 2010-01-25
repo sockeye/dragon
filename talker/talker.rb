@@ -60,7 +60,8 @@ class Talker
         @connected_users[u.lower_name] = u
       end
     end
-    EventMachine::add_periodic_timer( 1 ) { Talker.instance.tick }
+    
+    start_heartbeat
   end
   
   def connection(signature, ip_address)
@@ -185,13 +186,26 @@ class Talker
     @connected_users.values.select {|u|u.debug}.each { |u| u.output "^g[debug] #{message}^n" }
   end  
   
-  def tick
-    if (Time.now.to_i % 60) == 0
+  def start_heartbeat
+    # make sure that the tick is executed on a time rounded to 10 seconds
+    @next_tick = Time.at((Time.now.to_i / 10) * 10)
+    schedule_tick
+  end
+  
+  def schedule_tick
+    @next_tick += 10.0
+    now = Time.now
+    time_to_wait = @next_tick - now
+    EventMachine::add_timer time_to_wait, proc { Talker.instance.tick(@next_tick) }
+  end
+  
+  def tick(now)
+    if (now.to_i % 60) == 0
       @connected_users.each do |name, u|
         u.raw_send "\377\361" # send IAC NOP
       end
     end
-#    debug_message "Tick #{Time.now}"
+    schedule_tick
   end
   
 end
