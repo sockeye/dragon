@@ -197,6 +197,11 @@ module Commands
   end
   define_alias 'history', 'recall', 'review'
 
+  define_command 'myhistory' do
+    output title_line("Your Private History") + "\n" + history.to_s + "\n" + blank_line
+  end
+  define_alias 'myhistory', 'rhistory'
+
   define_command 'give' do |message|
     (recipient_name, amount) = get_arguments(message, 2)
     amount = amount.to_i

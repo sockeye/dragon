@@ -100,6 +100,11 @@ module Helpers
     Social.socials
   end
   
+  def output_with_history(message)
+    history.add(message) # add to the users personal history buffer
+    output(message)
+  end
+  
   def output(message)
     buffer = "\r" + colourise(encode_string(message, charset), self.colour).gsub("\n", "\\n") + "\033[0K\\n"
     buffer += (colourise(encode_string(get_prompt, charset), self.colour) + "\377\371") if Talker.instance.current_id != id

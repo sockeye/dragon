@@ -46,8 +46,8 @@ module Commands
           else
             ['tell', '']
           end
-          target.output "^L> #{cname}^L #{format[0]}s #{format[1]}you \u{2018}#{message}^L\u{2019}^n"
-          output "^L> You #{format[0]} #{format[1]}#{target.cname}^L \u{2018}#{message}^L\u{2019}^n"
+          target.output_with_history "^L> #{cname}^L #{format[0]}s #{format[1]}you \u{2018}#{message}^L\u{2019}^n"
+          output_with_history "^L> You #{format[0]} #{format[1]}#{target.cname}^L \u{2018}#{message}^L\u{2019}^n"
           output_inactive_message(target)
         end
       end
@@ -68,8 +68,8 @@ module Commands
         target = find_connected_user(target_name)
         if target
           space = message =~ /^[,']/ ? '' : ' '
-          target.output "^L> #{cname}^L#{space}#{message}^n (to you)^n"
-          output "^L> #{cname}^L#{space}#{message}^n (to #{target.cname}^n)^n"
+          target.output_with_history "^L> #{cname}^L#{space}#{message}^n (to you)^n"
+          output_with_history "^L> #{cname}^L#{space}#{message}^n (to #{target.cname}^n)^n"
           output_inactive_message(target)
         end
       end

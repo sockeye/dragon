@@ -49,7 +49,7 @@ class Multi
   end
   
   def output_ex(user, message)
-    users_excluding(user).each { |u| u.output message }
+    users_excluding(user).each { |u| u.output_with_history message }
   end
 
   def names_ex(user)
@@ -58,14 +58,14 @@ class Multi
 
   def tell(from, message)
     if member?(from)
-      from.output "^L(#{@num}) You say '#{message}^L' to #{names_ex(from)}"
+      from.output_with_history "^L(#{@num}) You say '#{message}^L' to #{names_ex(from)}"
       output_ex(from, "^L(#{@num}) #{from.cname}^L says '#{message}^L' to #{names_ex(from)}")
     end
   end
   
   def pemote(from, message)
     if member?(from)
-      from.output "^L(#{@num}) You emote '#{from.cname} #{message}^L' to #{names_ex(from)}"
+      from.output_with_history "^L(#{@num}) You emote '#{from.cname} #{message}^L' to #{names_ex(from)}"
       output_ex(from, "^L(#{@num}) #{from.cname}^L #{message}^L (to #{names_ex(from)})")
     end    
   end

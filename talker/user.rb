@@ -29,6 +29,7 @@ class User
   RANK = ['Peasant', 'Farmer', 'Knight', 'Baron', 'Earl', 'Princess', 'King']
   RANK_COLOUR = ['', '^y', '^Y', '^G', '^C', '^P', '^R']
 
+  # this is only called for new users, not existing users
   def initialize(name)
     @name = name
     @first_seen = @last_activity = Time.now
@@ -42,6 +43,10 @@ class User
 
   def lower_name
     name.downcase
+  end
+
+  def history
+    @history ||= History.new
   end
 
   def password=(password)
