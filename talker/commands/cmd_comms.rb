@@ -22,7 +22,7 @@ module Commands
     if message.blank?
       output "Format: echo <message>"
     else
-      channel_output "[#{cname}] #{message}"
+      channel_output "[#{cname}] #{message}^n"
     end
   end
   define_alias 'echo', '+'
