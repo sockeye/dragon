@@ -200,10 +200,20 @@ class Talker
   end
   
   def tick(now)
-    if (now.to_i % 60) == 0
+    if (now.to_i % 120) == 0 # every 2 minutes
       @connected_users.each do |name, u|
         u.raw_send "\377\361" # send IAC NOP
       end
+    end
+    
+    if (now.to_i % 900) == 0 # every 15 minutes
+      @connected_users.each do |name, u|
+        if u.active?
+          amount = 3 * (u.rank + 1)
+          u.money += amount
+        end
+      end
+      save
     end
     schedule_tick
   end
