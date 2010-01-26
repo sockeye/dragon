@@ -1,4 +1,3 @@
- • Server support for unicode. Enable with the ^Lcharset^n command
- • Socials are now imported from wooooooooooooooy.com
- • Basic support for crappy telnet clients
- • New command ^Lomnibus^n for viewing bus timetables
+ • Fixed bug when logging in with Putty
+ • Added support for windows telnet and ucx telnet on openvms
+ • Active users receive drogna periodically
