@@ -1,3 +1,4 @@
+ • ^Lmyhistory^n command (aliased to ^Lrhistory^n) is back from maintenance
  • Fixed bug when logging in with Putty
  • Added support for windows telnet and ucx telnet on openvms
  • Active users receive drogna periodically
