@@ -41,6 +41,15 @@ module Commands
       output "No permission."
     end
   end
+
+  define_command 'show_changes' do
+    if developer?
+      buffer = title_line("#{Talker::NAME} Has Been Updated!") + "\n" + get_text("changes") + "\n" + blank_line
+      output_to_all buffer
+    else
+      output "No permission."
+    end
+  end
   
 #  define_command 'dectest' do
 #    output "\033(0 k l m n o p q r s t u v w x }\033(B"
