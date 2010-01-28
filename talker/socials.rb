@@ -180,4 +180,7 @@ class Social
     @socials.keys.sort {|a,b|a <=> b}
   end
   
+  def self.socials_by(u)
+    @socials.values.select{|s|s.creator == u.lower_name}
+  end
 end

@@ -4,10 +4,6 @@ module Commands
     output title_line("Commands") + "\n" + Commands.names.join(", ") + "\n" + blank_line
   end
 
-  define_command 'socials' do
-    output title_line("Socials") + "\n" + Social.names.join(", ") + "\n" + blank_line
-  end
-  
   define_command 'changes' do 
     output title_line("Recent Changes") + "\n" + get_text("changes") + "\n" + blank_line
   end
@@ -278,5 +274,14 @@ module Commands
         social.delete
       end
     end
-  end 
+  end
+  
+  define_command 'socials' do |user_name|
+    if user_name.blank?
+      output title_line("Socials") + "\n" + Social.names.join(", ") + "\n" + blank_line
+    elsif user = find_user(user_name)
+      output title_line("Socials Owned By #{user.name}") + "\n" + Social.socials_by(user).map{|s| s.name}.join(", ") + "\n" + blank_line
+    end
+  end
+  
 end
