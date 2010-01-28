@@ -79,10 +79,12 @@ class Social
           stored_string = ""
         end
       when "}", "[at random]"
-        random_choices.push(stored_string)
-        selected_choice = random_choices[rand(random_choices.length)]
-        (random_choices, stored_string) = stack.pop
-        stored_string << selected_choice
+        unless stack.empty?
+          random_choices.push(stored_string)
+          selected_choice = random_choices[rand(random_choices.length)]
+          (random_choices, stored_string) = stack.pop
+          stored_string << selected_choice
+        end
       end
     end
     stored_string << scanner.rest if scanner.rest?
