@@ -219,10 +219,10 @@ module Commands
   end
   
   define_command 'social pull' do |social_name|
-    social_name.downcase!
     if social_name.blank?
       output "Format: social pull <social name>"
     elsif valid_name?(social_name, :allow_bad_words => true)
+      social_name.downcase!
       buffer = ""
       creator = ""
       begin
