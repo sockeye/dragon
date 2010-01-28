@@ -1,4 +1,5 @@
- • ^Lmyhistory^n command (aliased to ^Lrhistory^n) is back from maintenance
- • Fixed bug when logging in with Putty
- • Added support for windows telnet and ucx telnet on openvms
- • Active users receive drogna periodically
+ • Use ^Lsocial pull^n to add or update a social from wooooooooooooooy.com
+ • Use ^Lsocial liquidate^n to wind up the affairs of a social
+ • Type ^Lsocials <user name>^n to view all socials owned by a particular user
+ • Use the ^Ltimestamps^n command to show a time with every message
+ • The ^Lmyhistory^n command (aliased to ^Lrhistory^n) is back from maintenance

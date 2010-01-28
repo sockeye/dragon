@@ -25,7 +25,7 @@ require 'talker/games/bsheep'
 
 class Talker
   NAME    = 'Dragon World'
-  VERSION = '0.7.1'
+  VERSION = '0.7.2'
   
   include Singleton
   
