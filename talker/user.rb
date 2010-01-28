@@ -22,7 +22,7 @@ class User
   attr_reader :rank
   attr_accessor :debug
 
-  attr_accessor :id, :handler, :ip_address, :charset
+  attr_accessor :id, :handler, :ip_address, :charset, :show_timestamps
 
   attr_accessor :idle_message, :muffled
 

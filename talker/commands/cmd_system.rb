@@ -93,7 +93,7 @@ module Commands
 
   define_command 'whod' do
     output title_line("Who Debug") + "\n" +
-      active_users.map { |u| sprintf("%15.15s [#{u.charset.to_s}] #{u.debug ? '[Debug]' : ''}^n", u.name) }.join("\n") + "\n" + 
+      active_users.map { |u| sprintf("%15.15s [#{(u.charset || "ascii").to_s}]#{u.debug ? ' [Debug]' : ''}#{u.show_timestamps ? ' [Timestamps]' : ''}^n", u.name) }.join("\n") + "\n" + 
       blank_line
   end
   define_alias 'who', 'w'

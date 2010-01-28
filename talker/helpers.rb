@@ -7,7 +7,12 @@ module Helpers
   end
   
   def channel_output(message)
-    output_to_all message
+    connected_users.values.each do |u| 
+      unless u.muffled 
+        m = u.show_timestamps ? "^c#{Time.now.strftime("%H:%M")}^n #{message}" : message
+        u.output m
+      end
+    end
     talker_history.add message
   end    
     
@@ -102,7 +107,8 @@ module Helpers
   
   def output_with_history(message)
     history.add(message) # add to the users personal history buffer
-    output(message)
+    m = show_timestamps ? "^c#{Time.now.strftime("%H:%M")}^n #{message}" : message
+    output(m)
   end
   
   def output(message)

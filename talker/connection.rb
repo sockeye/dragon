@@ -94,6 +94,10 @@ class Connection
     :ascii
   end
   
+  def show_timestamps
+    false
+  end
+  
   def get_prompt
     ""
   end
