@@ -64,7 +64,7 @@ module Commands
         c.command_block = block
       else
         @command_list[name] = Command.new(name, block)
-        @visible_command_names << name
+        @visible_command_names << name unless options[:invisible]
       end
     end
   end

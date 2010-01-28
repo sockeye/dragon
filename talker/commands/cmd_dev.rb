@@ -1,6 +1,6 @@
 # encoding: utf-8
 module Commands
-  define_command 'reboot' do
+  define_command 'reboot', :invisible => true do
     if developer?
       reboot
     else
@@ -8,7 +8,7 @@ module Commands
     end
   end
 
-  define_command 'shutdown' do |message|
+  define_command 'shutdown', :invisible => true do |message|
     if developer?
       if message.blank?
         output "Format: shutdown <message>"
@@ -21,7 +21,7 @@ module Commands
     end
   end
   
-  define_command 'multis' do
+  define_command 'multis', :invisible => true do
     output title_line("Multis") + "\n" + Multi.view + "\n" + blank_line
   end
 
@@ -42,7 +42,7 @@ module Commands
     end
   end
 
-  define_command 'show_changes' do
+  define_command 'show_changes', :invisible => true do
     if developer?
       buffer = title_line("#{Talker::NAME} Has Been Updated!") + "\n" + get_text("changes") + "\n" + blank_line
       output_to_all buffer
