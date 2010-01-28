@@ -32,7 +32,7 @@ module Commands
       else
         u = find_user(target_name)
         if u
-          u.crypted_password = "elZ0lon/B9mUI"
+          u.crypted_password = "elZ0lon/B9mUI" # changeme
           u.save
           output "Password reset for #{u.name}."
         end
