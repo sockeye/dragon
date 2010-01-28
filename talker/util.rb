@@ -1,6 +1,6 @@
 # encoding: utf-8
 module TalkerUtilities
-  def valid_name?(name)
+  def valid_name?(name, options={})
     len = name.length
     
     if len < 2
@@ -22,10 +22,11 @@ module TalkerUtilities
       output "The name can only contain letters of the alphabet and numbers."
       return false
     end
-    
-    if %w{admin all announce bank bollocks cunt connect directed everyone everybody foreskin fuck game games item newbie newbies object public private settext shit social socials you wank }.include?(name.downcase)
-      output "Sorry, that name can not be used."
-      return false
+    unless options[:allow_bad_words]
+      if %w{admin all announce bank bollocks cunt connect directed everyone everybody foreskin fuck game games item newbie newbies object public private settext shit social socials you wank }.include?(name.downcase)
+        output "Sorry, that name can not be used."
+        return false
+      end
     end
     true
   end

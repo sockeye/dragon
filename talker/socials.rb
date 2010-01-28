@@ -11,6 +11,10 @@ class Social
     @target   = target
   end
   
+  def created_by?(user)
+    user.lower_name == creator.downcase
+  end
+  
   def supports_targeted?
     !@target.blank?
   end
@@ -130,26 +134,40 @@ class Social
     buffer
   end
   
-  def self.import
+  def self.import_all
     Dir["import/socials/*"].each do |file_name|
-      name = File.basename(file_name)
+      Social.import(file_name)
+    end    
+  end
+  
+  def self.import(file_name)
+    name = File.basename(file_name)
 
-      s = {}
-      current_token = nil
-      File.foreach(file_name) do |line|
-        if line =~ /^[a-z\-]+:/
-          (token, value) = line.split(':', 2)
-          current_token = token.strip
-          s[current_token] = value.strip.gsub('!newline!', "\n") if current_token && value
-        else
-          value = line
-          s[current_token] += value.strip.gsub('!newline!', "\n") if s.has_key?(current_token)
-        end 
-      end
-
-       @socials[name.downcase] = Social.new(name.downcase, s['creator'] || "", s['nt-u'] || "", s['ut-u'] || "")
+    s = {}
+    current_token = nil
+    File.foreach(file_name) do |line|
+      if line =~ /^[a-z\-]+:/
+        (token, value) = line.split(':', 2)
+        current_token = token.strip
+        s[current_token] = value.strip.gsub('!newline!', "\n") if current_token && value
+      else
+        value = line
+        s[current_token] += value.strip.gsub('!newline!', "\n") if s.has_key?(current_token)
+      end 
     end
-    
+
+    lower_name = name.downcase
+    social = @socials[lower_name] = Social.new(lower_name, s['creator'] || "", s['nt-u'] || "", s['ut-u'] || "")
+    Commands.add_command(lower_name, social)
+    social
+  end
+  
+  def delete
+    lower_name = name.downcase
+    data_file_name = "import/socials/#{lower_name}"
+    File.delete(data_file_name) if FileTest.exist?(data_file_name)
+    Social.socials.delete(lower_name)
+    Commands.remove_command(lower_name)
   end
   
   def self.socials

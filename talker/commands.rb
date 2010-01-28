@@ -83,8 +83,12 @@ module Commands
     @visible_command_names.sort {|a,b|a <=> b}
   end
   
-  def self.add_commands(commands)
-    commands.each { |key, value| @command_list[key] = value }
+  def self.add_command(name, command)
+    @command_list[name] = command
+  end
+  
+  def self.remove_command(name)
+    @command_list.delete(name)
   end
   
   def self.lookup(name)

@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'singleton'
+require 'open-uri'
 
 require 'talker/util'
 require 'talker/helpers'
@@ -48,8 +49,7 @@ class Talker
     @output = EM::Channel.new
     Textfile.load
     @all_users = User.load_all
-    Social.import
-    Commands.add_commands(Social.socials)
+    Social.import_all
     Game.load
     
     load_connections
