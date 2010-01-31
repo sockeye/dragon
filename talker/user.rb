@@ -22,6 +22,12 @@ class User
   attr_reader :rank
   attr_accessor :debug
 
+  attr_accessor :location
+  attr_accessor :homepage
+  attr_accessor :occupation
+  attr_accessor :status
+  attr_accessor :realname
+
   attr_accessor :id, :handler, :ip_address, :charset, :show_timestamps
 
   attr_accessor :idle_message, :muffled
@@ -251,7 +257,7 @@ class User
     "#{RANK_COLOUR[rank]}#{name}^n"
   end
   
-  def examine
+    def examine
     buffer = "      First seen : #{first_seen}\n"
     if logged_in?
       buffer += "      Login time : #{time_in_words(login_time)}\n"
@@ -262,6 +268,33 @@ class User
     end
     buffer += "     Connections : #{total_connections}\n"
     buffer += "            Rank : #{rank_name_with_colour}\n"
+    
+    if self.realname.blank?
+    else
+      buffer += "       Real name : #{realname}^n\n"
+    end
+
+    buffer += "          Gender : #{gender_text.capitalize}\n"
+
+    if self.status.blank?
+    else
+      buffer += "  Marital Status : #{status.capitalize}^n\n"
+    end
+
+    if self.location.blank?
+    else 
+      buffer += "        Location : #{location}^n\n"
+    end
+    
+    if self.occupation.blank?
+    else
+      buffer += "      Occupation : #{occupation}^n\n"
+    end
+    if self.homepage.blank?
+    else
+      buffer += "        Homepage : ^U^B#{homepage}^n\n"
+    end
+  
     buffer += "          Drogna : #{money}\n"
     buffer
   end

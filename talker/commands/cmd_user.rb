@@ -20,6 +20,77 @@ module Commands
     save
   end
 
+ define_command 'location' do |message|
+    if message.blank?
+      self.location = ""
+      output "You are now homeless"
+    else
+      self.location = message.slice(0, 60)
+      output "Your location is now set to: #{location}^n"
+      end
+      save
+  end
+
+define_command 'homepage' do |message|
+    if message.blank?
+      self.homepage = ""
+      output "You now have no homepage"
+    else
+      self.homepage = message.slice(0, 60)
+      output "Your homepage is now set to: ^B^U#{homepage}^n"
+      end
+      save
+  end
+
+define_command 'occupation' do |message|
+    if message.blank?
+      self.occupation = ""
+      output "You are now on the dole"
+    else
+      self.occupation = message.slice(0, 60)
+      output "Your occupation is now set to: #{occupation}^n"
+      end
+      save
+  end
+
+define_command 'realname' do |message|
+    if message.blank?
+      self.realname = ""
+      output "You remain anonymous"
+    else
+      self.realname = message.slice(0, 60)
+      output "Your real name is now set to: #{realname}^n"
+      end
+      save
+  end
+
+define_command 'status' do |message|
+    changed = true
+    if message == "single"
+      self.status = "single"
+    elsif message == "attached"
+      self.status = "in a relationship"
+    elsif message == "married"
+      self.status = "married"
+    elsif message == "none"
+      self.status = ""
+      nostatus = true
+    else
+      changed = false
+    end
+    if self.status.blank? and changed
+              output "Your marital status has been blanked."
+    elsif self.status.blank? and !changed
+              output "Your marital status is not set.\nTo change it type ^Lstatus <single|attached|married|none>^n"
+    elsif !self.status.blank? and changed
+              output "Your marital status has been changed to #{status}."
+    else  
+      output "Your marital status is #{status}.\nTo change it type ^Lstatus <single|attached|married|none>^n"
+    end
+    save
+  end
+
+
   define_command 'connectmsg' do |message|
     if message.blank?
       self.connect_message = nil
